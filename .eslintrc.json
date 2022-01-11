@@ -24,6 +24,8 @@
   вы можете прописать нужные правила вручную. */
   "rules": {
     "@typescript-eslint/no-var-requires": 0,
+    "class-methods-use-this": "off",
+    "consistent-return": "off",
     "no-underscore-dangle": "off",
     "prettier/prettier": "error",
     "@typescript-eslint/no-inferrable-types": "off"// Обязательно!! Подсвечивает ошибки из Prettier.

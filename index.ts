@@ -5,6 +5,8 @@ const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
 const path = require("path");
 const bodyParser = require("body-parser");
+const rout = require("./router/index");
+const errorMiddleware = require("./middlewares/error-middleware");
 
 const PORT = process.env.PORT || 5000;
 const app = express();
@@ -20,6 +22,9 @@ app.use(
     origin: process.env.CLIENT_URL,
   })
 );
+
+app.use("/api", rout);
+app.use(errorMiddleware);
 
 const start = async () => {
   try {
