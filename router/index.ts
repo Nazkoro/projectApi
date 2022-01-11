@@ -12,3 +12,5 @@ router.post(
   userController.registration
 );
 router.post("/login", userController.login);
+router.get("/users", authMiddleware, userController.getUsers);
+module.exports = router;
