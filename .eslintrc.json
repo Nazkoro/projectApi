@@ -23,6 +23,7 @@
   /* Правила для отслеживания линтером. Если пресеты покрывают не все ситуации,
   вы можете прописать нужные правила вручную. */
   "rules": {
+    "@typescript-eslint/no-var-requires": 0,
     "prettier/prettier": "error",
     "@typescript-eslint/no-inferrable-types": "off"// Обязательно!! Подсвечивает ошибки из Prettier.
   }
