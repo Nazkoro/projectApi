@@ -1,4 +1,5 @@
-const nodemailer = require("nodemailer");
+// const nodemailer = require("nodemailer");
+import nodemailer from "nodemailer";
 
 class MailService {
   transporter: any;
@@ -31,4 +32,4 @@ class MailService {
   }
 }
 
-module.exports = new MailService();
+export default new MailService();

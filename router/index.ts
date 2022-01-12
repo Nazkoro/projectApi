@@ -1,9 +1,10 @@
-const { Router } = require("express");
-const { body } = require("express-validator");
-const userController = require("../controllers/user-controller");
+import { Router } from "express";
+import { body } from "express-validator";
+import userController from "../controllers/user-controller";
+import authMiddleware from "../middlewares/authMiddleware";
 
+// @ts-ignore
 const router = new Router();
-const authMiddleware = require("../middlewares/authMiddleware");
 
 router.post(
   "/registration",
@@ -13,4 +14,4 @@ router.post(
 );
 router.post("/login", userController.login);
 router.get("/users", authMiddleware, userController.getUsers);
-module.exports = router;
+export default router;

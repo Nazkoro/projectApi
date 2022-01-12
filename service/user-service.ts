@@ -1,10 +1,10 @@
-const bcrypt = require("bcrypt");
-const uuid = require("uuid");
-const UserModel = require("../models/User");
-const mailService = require("./mail-service");
-const tokenService = require("./token-service");
-const UserDto = require("../dtos/user-dto");
-const ApiError = require("../exceptions/api-error");
+import bcrypt from "bcrypt";
+import { v4 as uuidv4 } from "uuid";
+import UserModel from "../models/User";
+import mailService from "./mail-service";
+import tokenService from "./token-service";
+import UserDto from "../dtos/user-dto";
+import ApiError from "../exceptions/api-error";
 
 class UserService {
   async registration(email, password, username) {
@@ -15,7 +15,7 @@ class UserService {
       );
     }
     const hashPassword = await bcrypt.hash(password, 3);
-    const activationLink = uuid.v4(); // v34fa-asfasf-142saf-sa-asf
+    const activationLink = uuidv4(); // v34fa-asfasf-142saf-sa-asf
 
     const user = await UserModel.create({
       email,
@@ -88,4 +88,4 @@ class UserService {
     return users;
   }
 }
-module.exports = new UserService();
+export default new UserService();

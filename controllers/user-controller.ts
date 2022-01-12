@@ -1,8 +1,29 @@
-const { validationResult } = require("express-validator");
-const userService = require("../service/user-service");
-const ApiErrors = require("../exceptions/api-error");
+import { validationResult } from "express-validator";
+import userService from "../service/user-service";
+import ApiErrors from "../exceptions/api-error";
 
 class UserController {
+  // async registration(req, res, next): Promise<void> {
+  //   try {
+  //     const errors = validationResult(req);
+  //     if (!errors.isEmpty()) {
+  //       return next(
+  //         ApiErrors.BadRequest("Ошибка при валидации", errors.array())
+  //       );
+  //     }
+  //
+  //     const userData = await userService.registration(req.body);
+  //     res.cookie("refreshToken", userData.refreshToken, {
+  //       maxAge: 30 * 24 * 60 * 60 * 1000,
+  //       httpOnly: true,
+  //     });
+  //     // return res.json(userData);
+  //     res.json(userData);
+  //   } catch (e) {
+  //     next(e);
+  //   }
+  // }
+
   async registration(req, res, next) {
     try {
       const errors = validationResult(req);
@@ -11,6 +32,7 @@ class UserController {
           ApiErrors.BadRequest("Ошибка при валидации", errors.array())
         );
       }
+      console.log(req.body);
       const { email, password, username } = req.body;
       const userData = await userService.registration(
         email,
@@ -21,7 +43,8 @@ class UserController {
         maxAge: 30 * 24 * 60 * 60 * 1000,
         httpOnly: true,
       });
-      return res.json(userData);
+      // return res.json(userData);
+      res.json(userData);
     } catch (e) {
       next(e);
     }
@@ -85,4 +108,4 @@ class UserController {
     }
   }
 }
-module.exports = new UserController();
+export default new UserController();
