@@ -1,19 +1,21 @@
 // const nodemailer = require("nodemailer");
 import nodemailer from "nodemailer";
+import SMTPTransport from "nodemailer/lib/smtp-transport";
 
 class MailService {
-  transporter: any;
+  transporter: nodemailer.Transporter;
 
   constructor() {
+    console.log(process.env.SMTP_PORT);
     this.transporter = nodemailer.createTransport({
       host: process.env.SMTP_HOST,
-      port: process.env.SMTP_PORT,
-      secure: false,
+      port: +process.env.SMTP_PORT,
+      // secure: false,
       auth: {
         user: process.env.SMTP_USER,
         pass: process.env.SMTP_PASSWORD,
       },
-    });
+    } as SMTPTransport.Options);
   }
 
   async sendActivationMail(to, link) {

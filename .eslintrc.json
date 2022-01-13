@@ -29,5 +29,8 @@
     "no-underscore-dangle": "off",
     "prettier/prettier": "error",
     "@typescript-eslint/no-inferrable-types": "off"// Обязательно!! Подсвечивает ошибки из Prettier.
+    //"import/first": "off"
+    //"sort-imports": ["error", { "ignoreDeclarationSort": true }]
+    //"sort-imports": "warn"
   }
 }
