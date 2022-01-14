@@ -7,6 +7,7 @@ export default class ApiError extends Error {
     super(message);
     this.status = status;
     this.errors = errors;
+    console.log("===== CLASS APIERROR======", status, message, errors);
   }
 
   static UnauthorizedError() {

@@ -1,5 +1,0 @@
-export interface RegData {
-	password: string;
-	username: string;
-	email: string;
-}
