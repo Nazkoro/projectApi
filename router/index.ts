@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { body } from "express-validator";
 import userController from "../controllers/user-controller";
+import postController from "../controllers/post-controller";
 import authMiddleware from "../middlewares/authMiddleware";
 
 // @ts-ignore
