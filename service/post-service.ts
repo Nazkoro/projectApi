@@ -3,6 +3,13 @@ import User from "../models/User";
 import ApiError from "../exceptions/api-error";
 
 class PostService {
+  // !!!IMPORTANT!!! ADD FUNCTION FOR DONT REPEAT REQUEST TO THE MONGODB (use ZAMYKANIYe)
+  // async findData(func) {
+  // ...
+  //   return await func;
+  // ...
+  // }
+
   async getAllPosts() {
     const posts = await PostModel.find();
     return posts;
@@ -18,24 +25,31 @@ class PostService {
   // update a post
 
   async updPost(id, bodyOfPost) {
-    const post = await PostModel.findById(id);
-    if (post.userId === bodyOfPost.userId) {
-      await post.updateOne({ $set: bodyOfPost });
+    try {
+      const post = await PostModel.findById(id);
 
-      return "the post has been updated";
+      if (post.userId === bodyOfPost.userId) {
+        await post.updateOne({ $set: bodyOfPost });
+
+        return "the post has been updated";
+      }
+    } catch {
+      throw new ApiError(403, "check your data");
     }
-    return new ApiError(403, "you can update only your post");
+
     // res.status(403).json("you can update only your post");
   }
   // delete a post
 
-  async removePost(id, bodyOfPost) {
-    const post = await PostModel.findById(id);
+  async removePost(_id, bodyOfPost) {
+    const post = await PostModel.findById(_id);
     if (post.userId === bodyOfPost.userId) {
       await post.deleteOne();
       return "the post has been deleted";
     }
-    return new ApiError(403, "you can delete only your post");
+    console.log("throw error");
+    throw new ApiError(403, "you can delete only your post");
+
     // return res.status(403).json("you can delete only your post");
   }
   // like / dislike a post

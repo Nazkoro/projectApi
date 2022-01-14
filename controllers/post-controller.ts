@@ -27,10 +27,22 @@ class PostController {
 
   async updatePost(req, res, next) {
     try {
+      console.log("====start======");
       const resultUpdPost = await postService.updPost(req.params.id, req.body);
+      console.log("======end========");
       return res.status(200).json(resultUpdPost);
-    } catch (e) {
-      next(e);
+    } catch (error) {
+      console.log(error);
+
+      // throw new ApiError(403, "check your data", e);
+      //
+      // const error = {
+      //   status: 403,
+      //   message: "check your data",
+      //   errors: e,
+      // };
+      next(error);
+
       //   res.status(500).json(err);
     }
   }
