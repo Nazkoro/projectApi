@@ -10,13 +10,6 @@ import { checkReq } from "../middlewares/checkRequest";
 // @ts-ignore
 const router = new Router();
 
-// router.post(
-//   "/registration",
-//   body("email").isEmail(),
-//   body("password").isLength({ min: 3, max: 32 }),
-//   userController.registration
-// );
-// router.post("/login", userController.login);
 router.post(
   "/registration",
   body("email").isEmail(),
@@ -24,7 +17,29 @@ router.post(
   authController.registration
 );
 router.post("/login", authController.login);
+router.get("/activate/:link", authController.activate);
+router.get("/refresh", authController.refresh);
 router.get("/users", authMiddleware, checkReq(userController.getUsers));
+
+router.put("/user/:id", authMiddleware, checkReq(userController.updateUser));
+router.delete("/user/:id", authMiddleware, checkReq(userController.deleteUser));
+router.get("/", authMiddleware, checkReq(userController.getUser));
+router.get(
+  "/friends/:userId",
+  authMiddleware,
+  checkReq(userController.getFriends)
+);
+router.put(
+  "/:id/follow",
+  authMiddleware,
+  checkReq(userController.putFollowUser)
+);
+router.put(
+  "/:id/unfollow",
+  authMiddleware,
+  checkReq(userController.putUnfollowUser)
+);
+
 router.get("/posts", authMiddleware, checkReq(postController.getPosts));
 router.post(
   "/upload",
@@ -33,8 +48,6 @@ router.post(
   checkReq(postController.createPost)
 );
 router.put("/post/:id", authMiddleware, checkReq(postController.updatePost));
-//!	IMPORTANT !!!---add global hadler for postController!!!
-// router.put("/post/:id", authMiddleware, handler(postController.updatePost));
 router.delete("/post/:id", authMiddleware, checkReq(postController.deletePost));
 // router.put("/:id/like", authMiddleware, postController.likedPost);
 router.put("/like", authMiddleware, checkReq(postController.likedPost));
