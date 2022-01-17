@@ -34,6 +34,7 @@ const start = async () => {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     } as ConnectOptions);
+    console.log(PORT);
     app.listen(PORT, () =>
       console.log(`Server started on PORT = ${PORT}, db:${process.env.DB_URL}`)
     );

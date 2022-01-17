@@ -3,6 +3,7 @@ import { body } from "express-validator";
 import userController from "../controllers/user-controller";
 import postController from "../controllers/post-controller";
 import authMiddleware from "../middlewares/authMiddleware";
+import multerMiddleware from "../middlewares/multer-middleware";
 
 // @ts-ignore
 const router = new Router();
@@ -16,12 +17,12 @@ router.post(
 router.post("/login", userController.login);
 router.get("/users", authMiddleware, userController.getUsers);
 router.get("/posts", authMiddleware, postController.getPosts);
-// router.post(
-//   "/upload",
-//   authMiddleware,
-//   multerMiddleware("file"),
-//   postController.createPost
-// );
+router.post(
+  "/upload",
+  authMiddleware,
+  multerMiddleware("file"),
+  postController.createPost
+);
 router.put("/post/:id", authMiddleware, postController.updatePost);
 //!	IMPORTANT !!!---add global hadler for postController!!!
 // router.put("/post/:id", authMiddleware, handler(postController.updatePost));
