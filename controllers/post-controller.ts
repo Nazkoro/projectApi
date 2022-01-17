@@ -3,13 +3,8 @@ import ApiError from "../exceptions/api-error";
 import PostModel from "../models/Post";
 
 class PostController {
-  async getPosts(req, res, next) {
-    try {
-      const posts = await postService.getAllPosts();
-      return res.json(posts);
-    } catch (e) {
-      next(e);
-    }
+  async getPosts(req, res) {
+    return postService.getAllPosts();
   }
 
   async createPost(req, res, next) {
