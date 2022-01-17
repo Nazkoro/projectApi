@@ -6,6 +6,7 @@ import authController from "../controllers/auth-controller";
 import authMiddleware from "../middlewares/authMiddleware";
 import multerMiddleware from "../middlewares/multter-middleware";
 import { checkReq } from "../middlewares/checkRequest";
+import commentController from "../controllers/comment-controller";
 
 // @ts-ignore
 const router = new Router();
@@ -61,5 +62,17 @@ router.get(
   "/profile/:username",
   authMiddleware,
   checkReq(postController.getUserAllPosts)
+);
+
+router.get(
+  "/printcomment",
+  authMiddleware,
+  checkReq(commentController.getComments)
+);
+router.post(
+  "/comment",
+  authMiddleware,
+  multerMiddleware("file"),
+  checkReq(commentController.createComment)
 );
 export default router;
