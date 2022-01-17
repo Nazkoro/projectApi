@@ -2,6 +2,7 @@ import postService from "../service/post-service";
 
 class PostController {
   getPosts(req, res) {
+    console.log("1111");
     return postService.getAllPosts();
   }
 
