@@ -1,6 +1,7 @@
 import PostModel from "../models/Post";
 import CommentModel from "../models/Comment";
-import UserModel from "../models/User";
+import ApiError from "../exceptions/api-error";
+import User from "../models/User";
 
 class CommentService {
   async getAllCommentS() {
@@ -12,73 +13,104 @@ class CommentService {
 
   // create a post
 
-  async addComment(bodyOfPost) {
-    const newComment = new CommentModel(bodyOfPost);
+  async addComment(bodyOfComment) {
+    const newComment = new CommentModel(bodyOfComment);
     const saveComment = await newComment.save();
     return saveComment;
   }
 
+  // update a post
+
+  async updComment(id, bodyOfComment) {
+    try {
+      const comment = await CommentModel.findById(id);
+
+      if (comment.userId === bodyOfComment.userId) {
+        await comment.updateOne({ $set: bodyOfComment });
+
+        return "the comment has been updated";
+      }
+    } catch {
+      throw new ApiError(403, "check your data input");
+    }
+
+    // res.status(403).json("you can update only your post");
+  }
+  // delete a post
+
+  async removeComment(_id, bodyOfComment) {
+    const post = await CommentModel.findById(_id);
+    if (post.userId === bodyOfComment.userId) {
+      await post.deleteOne();
+      return "the post has been deleted";
+    }
+    console.log("throw error");
+    throw new ApiError(403, "you can delete only your post");
+
+    // return res.status(403).json("you can delete only your post");
+  }
+  // like / dislike a post
+
+  // async likePost (id, bodyOfComment) {
   //
-  // async updPost(id, bodyOfPost) {
-  //     const post = await PostModel.findById(id);
-  //     if (post.userId === bodyOfPost.userId) {
-  //         await post.updateOne({ $set: bodyOfPost });
-  //         return res.status(200).json("the post has been updated");
+  //     const post = await CommentModel.findById(id);
+  //     if (!post.likes.includes(bodyOfComment.userId)) {
+  //       await post.updateOne({ $push: { likes: bodyOfComment.userId } });
+  //       return res.status(200).json("The post has been liked");
   //     } else {
-  //         res.status(403).json("you can update only your post");
+  //       await post.updateOne({ $pull: { likes: bodyOfComment.userId } });
+  //       return  res.status(200).json("The post has been disliked");
   //     }
   // };
-  //
-  // async removePost(id, bodyOfPost) {
-  //
-  //     const post = await PostModel.findById(id);
-  //     if (post.userId === bodyOfPost.userId) {
-  //         await post.deleteOne();
-  //         return res.status(200).json("the post has been deleted");
-  //     } else {
-  //         return res.status(403).json("you can delete only your post");
+  async likeComment(bodyOfComment) {
+    console.log("=============bodyOfComment================", bodyOfComment);
+    const post = await CommentModel.findById(bodyOfComment._id);
+    // if (!post.likes.includes(bodyOfComment.userId)) {
+    if (!post.likes.includes(bodyOfComment.currentId)) {
+      console.log(1);
+      await post.updateOne({ $push: { likes: bodyOfComment.currentId } });
+      return post;
+      // return res.status(200).json("The post has been liked");
+    }
+    console.log(2);
+    await post.updateOne({ $pull: { likes: bodyOfComment.currentId } });
+    // return  res.status(200).json("The post has been disliked");
+    return post;
+  }
+
+  // get a post
+  async printComment(id) {
+    const post = await CommentModel.findById(id);
+    return post;
+  }
+
+  //   router.get("/posts", async (req, res) => {
+  //     try {
+  //       const posts = await CommentModel.find()
+  //       res.status(200).json(posts);
+  //     } catch (err) {
+  //       res.status(500).json(err);
   //     }
-  // };
-  //
-  // async likePost (bodyOfPost) {
-  //     console.log('=============bodyOfPost================',bodyOfPost)
-  //     const post = await PostModel.findById(bodyOfPost._id);
-  //     // if (!post.likes.includes(bodyOfPost.userId)) {
-  //     if (!post.likes.includes(bodyOfPost.currentId)) {
-  //         console.log(1)
-  //         await post.updateOne({ $push: { likes: bodyOfPost.currentId } });
-  //         return post
-  //     } else {
-  //         console.log(2)
-  //         await post.updateOne({ $pull: { likes: bodyOfPost.currentId } });
-  //         return  post
-  //     }
-  // };
-  // //get a post
-  // async printPost (id)  {
-  //     const post = await PostModel.findById(id);
-  //     return res.status(200).json(post);
-  // };
-  //
-  // //get timeline posts
-  //
-  // async printPostTimeline(userId) {
-  //     const currentUser = await User.findById(userId);
-  //     const userPosts = await PostModel.find({ userId: currentUser._id });
-  //     const friendPosts = await Promise.all(
-  //         currentUser.followings.map((friendId) => {
-  //             return PostModel.find({ userId: friendId });
-  //         })
-  //     );
-  //     return res.status(200).json(userPosts.concat(...friendPosts));
-  // };
-  //
-  //
-  // async printPostAll (username) {
-  //     const user = await User.findOne({ username: username });
-  //     const posts = await PostModel.find({ userId: user._id });
-  //     return res.status(200).json(posts);
-  // };
+  //   });
+
+  // get timeline posts
+  async printCommentTimeline(userId) {
+    const currentUser = await User.findById(userId);
+    const userPosts = await CommentModel.find({ userId: currentUser._id });
+    const friendPosts = await Promise.all(
+      currentUser.followings.map((friendId) => {
+        return CommentModel.find({ userId: friendId });
+      })
+    );
+    return userPosts.concat(...friendPosts);
+  }
+
+  // get user's all posts
+  async printCommentAll(username) {
+    const user = await User.findOne({ username });
+    const posts = await CommentModel.find({ userId: user._id });
+    return posts;
+  }
 }
 
 export default new CommentService();

@@ -34,7 +34,7 @@ class PostService {
         return "the post has been updated";
       }
     } catch {
-      throw new ApiError(403, "check your data");
+      throw new ApiError(403, "check your data input");
     }
 
     // res.status(403).json("you can update only your post");

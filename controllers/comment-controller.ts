@@ -14,33 +14,33 @@ class CommentController {
     return commentService.addComment(req.body);
   }
 
-  updatePost(req, res) {
-    return postService.updPost(req.params.id, req.body);
+  updateComment(req, res) {
+    return commentService.updComment(req.params.id, req.body);
   }
 
   // delete a post
-  deletePost(req, res) {
-    return postService.removePost(req.params.id, req.body);
+  deleteComment(req, res) {
+    return commentService.removeComment(req.params.id, req.body);
   }
 
   // like / dislike a post
-  likedPost(req, res) {
-    return postService.likePost(req.body);
+  likedComment(req, res) {
+    return commentService.likeComment(req.body);
   }
 
   // get a post
-  getPost(req, res) {
-    return postService.printPost(req.params.id);
+  getComment(req, res) {
+    return commentService.printComment(req.params.id);
   }
 
   // get timeline posts
-  getTimelinePosts(req, res) {
-    return postService.printPostTimeline(req.params.userId);
+  getTimelineComment(req, res) {
+    return commentService.printCommentTimeline(req.params.userId);
   }
 
   // get user's all posts
-  getUserAllPosts(req, res) {
-    return postService.printPostAll(req.params.username);
+  getUserAllComment(req, res) {
+    return commentService.printCommentAll(req.params.username);
   }
 }
 
