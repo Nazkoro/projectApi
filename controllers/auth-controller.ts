@@ -1,6 +1,7 @@
 import { validationResult } from "express-validator";
 import ApiErrors from "../exceptions/api-error";
 import authService from "../module/auth/auth.service";
+import userService from "../service/user-service";
 
 class AuthController {
   async registration(req, res, next): Promise<void> {
@@ -70,6 +71,23 @@ class AuthController {
     } catch (e) {
       next(e);
     }
+  }
+
+  async email(req, res, next) {
+    console.log(req.body);
+    try {
+      const userData = await authService.checkEmail(req.body);
+
+      return res.json(userData);
+    } catch (e) {
+      next(e);
+    }
+  }
+
+  async updatePassword(req, res) {
+    const user = await authService.updPassword(req.body, req.user.id);
+    console.log(user);
+    return user;
   }
 }
 export default new AuthController();
