@@ -12,10 +12,11 @@ postRouter.post(
   multerMiddleware("file"),
   checkReq(postController.createPost)
 );
+postRouter.put("/like", checkReq(postController.likedPost));
 postRouter.put("/:id", checkReq(postController.updatePost));
 postRouter.delete("/:id", checkReq(postController.deletePost));
 // router.put("/:id/like", authMiddleware, postController.likedPost);
-postRouter.put("/like", checkReq(postController.likedPost));
+
 postRouter.get("/timeline/:userId", checkReq(postController.getTimelinePosts));
 postRouter.get("/profile/:username", checkReq(postController.getUserAllPosts));
 postRouter.get("/:id", checkReq(postController.getPost));

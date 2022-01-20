@@ -3,7 +3,7 @@ import UserModel from "../models/User";
 class UserService {
   async getAllUsers() {
     const users = await UserModel.find();
-    console.log(users);
+    // console.log(users);
     return users;
   }
 

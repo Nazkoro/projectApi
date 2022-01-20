@@ -69,14 +69,14 @@ class PostService {
     console.log("=============bodyOfPost================", bodyOfPost);
     const post = await PostModel.findById(bodyOfPost._id);
     // if (!post.likes.includes(bodyOfPost.userId)) {
-    if (!post.likes.includes(bodyOfPost.currentId)) {
+    if (!post.likes.includes(bodyOfPost.currentUserId)) {
       console.log(1);
-      await post.updateOne({ $push: { likes: bodyOfPost.currentId } });
+      await post.updateOne({ $push: { likes: bodyOfPost.currentUserId } });
       return post;
       // return res.status(200).json("The post has been liked");
     }
     console.log(2);
-    await post.updateOne({ $pull: { likes: bodyOfPost.currentId } });
+    await post.updateOne({ $pull: { likes: bodyOfPost.currentUserId } });
     // return  res.status(200).json("The post has been disliked");
     return post;
   }

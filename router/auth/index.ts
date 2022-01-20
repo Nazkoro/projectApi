@@ -13,6 +13,7 @@ authRouter.post(
   authController.registration
 );
 authRouter.post("/login", authController.login);
+authRouter.post("/logout", authController.logout);
 authRouter.post("/email", authController.email);
 // authRouter.post("/password", authController.password);
 authRouter.get("/activate/:link", authController.activate);
