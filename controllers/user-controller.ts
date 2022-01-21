@@ -8,6 +8,10 @@ class UserController {
     return userService.getAllUsers();
   }
 
+  getOnlineUsers(req, res) {
+    return userService.getOnlineAllUsers();
+  }
+
   // delete user
   deleteUser(req, res) {
     if (req.body.userId === req.params.id || req.body.isAdmin) {

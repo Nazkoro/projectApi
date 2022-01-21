@@ -1,10 +1,16 @@
 import UserModel from "../models/User";
+import TokenModel from "../models/Token";
 
 class UserService {
   async getAllUsers() {
     const users = await UserModel.find();
     // console.log(users);
     return users;
+  }
+
+  async getOnlineAllUsers() {
+    const usersOnline = await TokenModel.find();
+    return usersOnline;
   }
 
   // update user

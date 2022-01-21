@@ -7,6 +7,7 @@ import { checkReq } from "../../middlewares/checkRequest";
 const userRouter = new Router();
 
 userRouter.get("/", checkReq(userController.getUsers));
+userRouter.get("/online", checkReq(userController.getOnlineUsers));
 
 userRouter.put("/:id", checkReq(userController.updateUser));
 userRouter.delete("/:id", checkReq(userController.deleteUser));

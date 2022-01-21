@@ -11,9 +11,16 @@ class CommentService {
     return comments;
   }
 
-  // create a post
+  // create a coment
 
   async addComment(bodyOfComment) {
+    const newComment = new CommentModel(bodyOfComment);
+    const saveComment = await newComment.save();
+    return saveComment;
+  }
+  // create text coment
+
+  async addTextComment(bodyOfComment) {
     const newComment = new CommentModel(bodyOfComment);
     const saveComment = await newComment.save();
     return saveComment;
@@ -110,6 +117,12 @@ class CommentService {
     const user = await User.findOne({ username });
     const posts = await CommentModel.find({ userId: user._id });
     return posts;
+  }
+
+  // get user's all posts
+  async printCommentForThisPost(id) {
+    const comment = await CommentModel.find({ postId: id });
+    return comment;
   }
 }
 

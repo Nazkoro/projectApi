@@ -14,6 +14,12 @@ class CommentController {
     return commentService.addComment(req.body);
   }
 
+  createTextComment(req, res) {
+    req.body.userId = req.user.id;
+    console.log(req.body);
+    return commentService.addTextComment(req.body);
+  }
+
   updateComment(req, res) {
     return commentService.updComment(req.params.id, req.body);
   }
@@ -41,6 +47,10 @@ class CommentController {
   // get user's all posts
   getUserAllComment(req, res) {
     return commentService.printCommentAll(req.params.username);
+  }
+
+  geAllCommentForPost(req, res) {
+    return commentService.printCommentForThisPost(req.params.id);
   }
 }
 

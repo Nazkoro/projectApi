@@ -1,6 +1,8 @@
+import { log } from "util";
 import PostModel from "../models/Post";
 import User from "../models/User";
 import ApiError from "../exceptions/api-error";
+import CommentModel from "../models/Comment";
 
 class PostService {
   // !!!IMPORTANT!!! ADD FUNCTION FOR DONT REPEAT REQUEST TO THE MONGODB (use ZAMYKANIYe)
@@ -11,7 +13,30 @@ class PostService {
   // }
 
   async getAllPosts() {
+    const comments = await CommentModel.find();
     const posts = await PostModel.find();
+    // eslint-disable-next-line array-callback-return
+    posts.forEach((currentPost) => {
+      // eslint-disable-next-line no-param-reassign
+      comments.forEach((currentComment) => {
+        // eslint-disable-next-line eqeqeq
+        if (currentPost._id == currentComment.postId) {
+          currentPost.coments.push(currentComment);
+        }
+      });
+    });
+
+    // const posts = await PostModel.aggregate([
+    //   {
+    //     $lookup: {
+    //       from: CommentModel.collection.name,
+    //       localField: "_id",
+    //       foreignField: "postId",
+    //       as: "commentsForPost",
+    //     },
+    //   },
+    // ]);
+    // console.log(posts);
     return posts;
   }
 
