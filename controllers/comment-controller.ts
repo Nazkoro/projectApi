@@ -4,19 +4,20 @@ import postService from "../service/post-service";
 
 class CommentController {
   getComments(req, res) {
-    console.log("1111111111111111111111");
     return commentService.getAllCommentS();
   }
 
   createComment(req, res) {
     req.body.img = req.file.filename;
-    console.log(req.body);
+    req.body.username = req.user.username
     return commentService.addComment(req.body);
   }
 
   createTextComment(req, res) {
+
     req.body.userId = req.user.id;
-    console.log(req.body);
+    req.body.username = req.user.username
+    console.log(req.body)
     return commentService.addTextComment(req.body);
   }
 

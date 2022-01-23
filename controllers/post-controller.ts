@@ -6,9 +6,10 @@ class PostController {
     return postService.getAllPosts();
   }
 
-  createPost(req, res, next) {
+  createPost(req, res) {
     req.body.img = req.file.filename;
     req.body.userId = req.user.id;
+    req.body.username = req.user.username
 
     return postService.addPost(req.body);
   }

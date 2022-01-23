@@ -18,7 +18,9 @@ class UserService {
     const user = await UserModel.findByIdAndUpdate(id, {
       $set: bodyOfPost,
     });
-    return "Account has been updated";
+    // user.save()
+    console.log("userInUserService",user)
+    return user;
   }
 
   // delete user
@@ -28,15 +30,16 @@ class UserService {
   }
 
   // get a user
-  async printUser(id, usrname) {
-    const userId = id;
-    const username = usrname;
-
-    const user = userId
-      ? await UserModel.findById(userId)
-      : await UserModel.findOne({ username });
-    const { password, updatedAt, ...other } = user._doc;
-    return other;
+  async printUser(id) {
+    const user  = await UserModel.findById(id)
+    return user
+    // const username = usrname;
+    //
+    // const user = userId
+    //   ? await UserModel.findById(userId)
+    //   : await UserModel.findOne({ username });
+    // const { password, updatedAt, ...other } = user._doc;
+    // return other;
   }
 
   // get friends
@@ -65,7 +68,7 @@ class UserService {
     if (!user.followers.includes(userId)) {
       await user.updateOne({ $push: { followers: userId } });
       await currentUser.updateOne({ $push: { followings: id } });
-      return "user has been followed";
+      return id;
     }
     // return res.status(403).json("you allready follow this user");
     return "you allready follow this user";
