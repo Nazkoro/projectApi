@@ -6,9 +6,11 @@ class PostController {
     return postService.getAllPosts();
   }
 
-  createPost(req, res, next) {
+  createPost(req, res) {
     req.body.img = req.file.filename;
     req.body.userId = req.user.id;
+    req.body.username = req.user.username;
+    console.log("111", req.body);
 
     return postService.addPost(req.body);
   }
@@ -26,8 +28,8 @@ class PostController {
     return postService.likePost(req.body);
   }
 
-  getPost(req, res) {
-    return postService.printPost(req.params.id);
+  getCurrentuserPosts(req, res) {
+    return postService.printPost(req.user.id);
   }
 
   getTimelinePosts(req, res) {

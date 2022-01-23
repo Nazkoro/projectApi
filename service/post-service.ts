@@ -1,4 +1,3 @@
-import { log } from "util";
 import PostModel from "../models/Post";
 import User from "../models/User";
 import ApiError from "../exceptions/api-error";
@@ -43,8 +42,12 @@ class PostService {
   // create a post
 
   async addPost(bodyOfPost) {
+    console.log("start 1");
+    console.log(bodyOfPost);
     const newPost = new PostModel(bodyOfPost);
+    console.log("start 2");
     const savePost = await newPost.save();
+    console.log("222", savePost);
     return savePost;
   }
   // update a post
@@ -108,8 +111,8 @@ class PostService {
 
   // get a post
   async printPost(id) {
-    const post = await PostModel.findById(id);
-    return post;
+    const myPost = await PostModel.find({ userId: id });
+    return myPost;
   }
 
   //   router.get("/posts", async (req, res) => {

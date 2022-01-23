@@ -19,6 +19,6 @@ postRouter.delete("/:id", checkReq(postController.deletePost));
 
 postRouter.get("/timeline/:userId", checkReq(postController.getTimelinePosts));
 postRouter.get("/profile/:username", checkReq(postController.getUserAllPosts));
-postRouter.get("/:id", checkReq(postController.getPost));
+postRouter.get("/my-post", checkReq(postController.getCurrentuserPosts));
 
 export default postRouter;

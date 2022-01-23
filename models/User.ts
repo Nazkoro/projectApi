@@ -47,17 +47,52 @@ const UserSchema = new mongoos.Schema(
       type: Boolean,
       default: false,
     },
-    desc: {
+    firstName: {
       type: String,
       max: 50,
+      default: "",
+    },
+    lastName: {
+      type: String,
+      max: 50,
+      default: "",
+    },
+    dateOfBirth: {
+      day: {
+        type: String,
+        max: 50,
+        default: "",
+      },
+      month: {
+        type: String,
+        max: 50,
+        default: "",
+      },
+      year: {
+        type: String,
+        max: 50,
+        default: "",
+      },
+    },
+    gender: {
+      type: String,
+      max: 50,
+      default: "",
     },
     city: {
       type: String,
       max: 50,
+      default: "",
     },
-    from: {
+    country: {
       type: String,
       max: 50,
+      default: "",
+    },
+    desc: {
+      type: String,
+      max: 50,
+      default: "",
     },
     relationship: {
       type: Number,

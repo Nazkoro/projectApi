@@ -22,7 +22,9 @@ class UserController {
 
   // get a user
   getUser(req, res) {
-    return userService.printUser(req.query.userId, req.query.username);
+    req.query.userId = req.user.id;
+    return userService.printUser(req.query.userId);
+    // return userService.printUser(req.query.userId, req.query.username);
   }
 
   // get friends
@@ -33,8 +35,9 @@ class UserController {
   // follow a user
 
   putFollowUser(req, res) {
-    if (req.body.userId !== req.params.id) {
-      return userService.followUser(req.params.id, req.body.userId);
+    req.body.userId = req.user.id;
+    if (req.body.userId !== req.body.id) {
+      return userService.followUser(req.body.id, req.body.userId);
     }
     res.status(403).json("you cant follow yourself");
   }
@@ -50,25 +53,23 @@ class UserController {
 
   // update user
   async updateUser(req, res, next) {
-    if (req.body.userId === req.params.id || req.body.isAdmin) {
-      if (req.body.password) {
-        try {
-          const salt = await bcrypt.genSalt(10);
-          req.body.password = await bcrypt.hash(req.body.password, salt);
-        } catch (err) {
-          return res.status(500).json(err);
-        }
-      }
-      try {
-        const user = await userService.updUser(req.params.id, req.body);
-        return user;
-      } catch (e) {
-        next(e);
-        // return res.status(500).json(err);
-      }
-    } else {
-      return res.status(403).json("You can update only your account!");
+    if (req.user.id) {
+      // if (req.body.userId === req.params.id || req.body.isAdmin) {
+      // if (req.body.password) {
+      //   try {
+      //     const salt = await bcrypt.genSalt(10);
+      //     req.body.password = await bcrypt.hash(req.body.password, salt);
+      //   } catch (err) {
+      //     return res.status(500).json(err);
+      //   }
+      // }
+
+      const user = await userService.updUser(req.user.id, req.body);
+      return user;
+
+      // return res.status(500).json(err);
     }
+    return res.status(403).json("You can update only your account!");
   }
 }
 export default new UserController();
