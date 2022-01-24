@@ -9,13 +9,11 @@ class CommentController {
 
   createComment(req, res) {
     req.body.img = req.file.filename;
-    req.body.username = req.user.username;
     return commentService.addComment(req.body);
   }
 
   createTextComment(req, res) {
     req.body.userId = req.user.id;
-    req.body.username = req.user.username;
     console.log(req.body);
     return commentService.addTextComment(req.body);
   }

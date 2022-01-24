@@ -19,7 +19,7 @@ class UserService {
       $set: bodyOfPost,
     });
     // user.save()
-    console.log("userInUserService", user);
+    console.log("userInUserService",user)
     return user;
   }
 
@@ -31,8 +31,8 @@ class UserService {
 
   // get a user
   async printUser(id) {
-    const user = await UserModel.findById(id);
-    return user;
+    const user  = await UserModel.findById(id)
+    return user
     // const username = usrname;
     //
     // const user = userId
