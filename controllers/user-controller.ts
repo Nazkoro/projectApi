@@ -66,6 +66,7 @@ class UserController {
 
       const user = await userService.updUser(req.user.id, req.body);
       return user;
+      console.log(1);
 
       // return res.status(500).json(err);
     }
