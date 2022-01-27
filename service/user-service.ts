@@ -19,7 +19,7 @@ class UserService {
       $set: bodyOfPost,
     });
     // user.save()
-    console.log("userInUserService",user)
+    console.log("userInUserService", user);
     return user;
   }
 
@@ -31,8 +31,8 @@ class UserService {
 
   // get a user
   async printUser(id) {
-    const user  = await UserModel.findById(id)
-    return user
+    const user = await UserModel.findById(id);
+    return user;
     // const username = usrname;
     //
     // const user = userId
@@ -57,6 +57,25 @@ class UserService {
       const { _id, username, profilePicture } = friend;
       friendList.push({ _id, username, profilePicture });
     });
+    return friendList;
+  }
+
+  // get myFriends
+  async printMyFriends(id) {
+    const user = await UserModel.findById(id);
+    const friends = await Promise.all(
+      user.followings.map((friendId) => {
+        return UserModel.findById(friendId);
+      })
+    );
+    const friendList = [];
+    // eslint-disable-next-line array-callback-return
+    friends.map((friend) => {
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      const { _id, username, profilePicture } = friend;
+      friendList.push({ _id, username, profilePicture });
+    });
+    console.log("=================Myfriends", friendList);
     return friendList;
   }
 

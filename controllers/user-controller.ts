@@ -32,6 +32,10 @@ class UserController {
     return userService.printFriends(req.params.userId);
   }
 
+  getMyFriends(req, res) {
+    return userService.printMyFriends(req.user.id);
+  }
+
   // follow a user
 
   putFollowUser(req, res) {

@@ -35,17 +35,15 @@ class PostService {
     //     },
     //   },
     // ]);
-    // console.log(posts);
+    console.log("===getAllPosts====", posts);
     return posts;
   }
 
   // create a post
 
   async addPost(bodyOfPost) {
-    console.log("start 1");
     console.log(bodyOfPost);
     const newPost = new PostModel(bodyOfPost);
-    console.log("start 2");
     const savePost = await newPost.save();
     console.log("222", savePost);
     return savePost;
