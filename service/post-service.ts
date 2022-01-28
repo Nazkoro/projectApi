@@ -92,19 +92,19 @@ class PostService {
   //     }
   // };
   async likePost(bodyOfPost) {
-    console.log("=============bodyOfPost================", bodyOfPost);
+    // походу надо обновлять вест пост!
+    console.log("999=============bodyOfPost======", bodyOfPost, Date.now());
     const post = await PostModel.findById(bodyOfPost._id);
-    // if (!post.likes.includes(bodyOfPost.userId)) {
-    if (!post.likes.includes(bodyOfPost.currentUserId)) {
-      console.log(1);
-      await post.updateOne({ $push: { likes: bodyOfPost.currentUserId } });
-      return post;
-      // return res.status(200).json("The post has been liked");
-    }
-    console.log(2);
-    await post.updateOne({ $pull: { likes: bodyOfPost.currentUserId } });
-    // return  res.status(200).json("The post has been disliked");
-    return post;
+    console.log("check post", post);
+    // if (!post.likes.includes(bodyOfPost.currentUserId)) {
+    //   await post.updateOne({ $push: { likes: bodyOfPost.currentUserId } });
+    //   return post;
+    // }{ $set: bodyOfPost }
+    const savePost = await post.updateOne({
+      $set: { likes: bodyOfPost.likes },
+    });
+    console.log("savePost", savePost);
+    return savePost;
   }
 
   // get a post

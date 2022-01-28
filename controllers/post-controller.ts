@@ -24,7 +24,8 @@ class PostController {
   }
 
   likedPost(req, res) {
-    req.body.currentUserId = req.user.id;
+    // req.body.currentUserId = req.user.id;
+    // return postService.likePost(req.body, req.user.id);
     return postService.likePost(req.body);
   }
 

@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
 const PostSchema = new mongoose.Schema(
   {
@@ -17,9 +17,19 @@ const PostSchema = new mongoose.Schema(
     img: {
       type: String,
     },
+    // likes: {
+    //   type: Array,
+    //   default: [],
+    // },
     likes: {
-      type: Array,
-      default: [],
+      isLiked: {
+        type: Boolean,
+        default: false,
+      },
+      count: {
+        type: Number,
+        default: 0,
+      },
     },
     coments: {
       type: Array,
