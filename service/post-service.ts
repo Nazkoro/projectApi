@@ -92,19 +92,12 @@ class PostService {
   //     }
   // };
   async likePost(bodyOfPost) {
-    // походу надо обновлять вест пост!
-    console.log("999=============bodyOfPost======", bodyOfPost, Date.now());
-    const post = await PostModel.findById(bodyOfPost._id);
-    console.log("check post", post);
-    // if (!post.likes.includes(bodyOfPost.currentUserId)) {
-    //   await post.updateOne({ $push: { likes: bodyOfPost.currentUserId } });
-    //   return post;
-    // }{ $set: bodyOfPost }
-    const savePost = await post.updateOne({
-      $set: { likes: bodyOfPost.likes },
-    });
-    console.log("savePost", savePost);
-    return savePost;
+    // eslint-disable-next-line no-param-reassign
+    bodyOfPost.likes.count = bodyOfPost.likes.isLiked
+      ? bodyOfPost.likes.count + 1
+      : bodyOfPost.likes.count;
+    const post = await PostModel.findByIdAndUpdate(bodyOfPost._id, bodyOfPost);
+    return post;
   }
 
   // get a post

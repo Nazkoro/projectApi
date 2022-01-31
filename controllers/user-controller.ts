@@ -57,23 +57,14 @@ class UserController {
 
   // update user
   async updateUser(req, res, next) {
-    if (req.user.id) {
-      // if (req.body.userId === req.params.id || req.body.isAdmin) {
-      // if (req.body.password) {
-      //   try {
-      //     const salt = await bcrypt.genSalt(10);
-      //     req.body.password = await bcrypt.hash(req.body.password, salt);
-      //   } catch (err) {
-      //     return res.status(500).json(err);
-      //   }
-      // }
+    console.log(req.body);
+    req.body.coverPicture = req.file.filename;
+    const user = await userService.updUser(req.user.id, req.body);
+    return user;
+    console.log(1);
 
-      const user = await userService.updUser(req.user.id, req.body);
-      return user;
-      console.log(1);
+    // return res.status(500).json(err);
 
-      // return res.status(500).json(err);
-    }
     return res.status(403).json("You can update only your account!");
   }
 }

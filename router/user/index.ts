@@ -12,7 +12,11 @@ userRouter.put("/follow", checkReq(userController.putFollowUser));
 userRouter.put("/unfollow", checkReq(userController.putUnfollowUser));
 // userRouter.put("/:id", checkReq(userController.updateUser));
 
-userRouter.put("/add-info", checkReq(userController.updateUser));
+userRouter.put(
+  "/add-info",
+  multerMiddleware("file"),
+  checkReq(userController.updateUser)
+);
 userRouter.delete("/:id", checkReq(userController.deleteUser));
 userRouter.get("/account", checkReq(userController.getUser));
 

@@ -57,22 +57,20 @@ const UserSchema = new mongoos.Schema(
       max: 50,
       default: "",
     },
-    dateOfBirth: {
-      day: {
-        type: String,
-        max: 50,
-        default: "",
-      },
-      month: {
-        type: String,
-        max: 50,
-        default: "",
-      },
-      year: {
-        type: String,
-        max: 50,
-        default: "",
-      },
+    day: {
+      type: String,
+      max: 50,
+      default: "",
+    },
+    month: {
+      type: String,
+      max: 50,
+      default: "",
+    },
+    year: {
+      type: String,
+      max: 50,
+      default: "",
     },
     gender: {
       type: String,
