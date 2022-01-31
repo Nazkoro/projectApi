@@ -95,9 +95,11 @@ class PostService {
     // eslint-disable-next-line no-param-reassign
     bodyOfPost.likes.count = bodyOfPost.likes.isLiked
       ? bodyOfPost.likes.count + 1
-      : bodyOfPost.likes.count;
-    const post = await PostModel.findByIdAndUpdate(bodyOfPost._id, bodyOfPost);
-    return post;
+      : bodyOfPost.likes.count - 1;
+
+    await PostModel.findByIdAndUpdate(bodyOfPost._id, bodyOfPost);
+    const updpatedPost = await PostModel.findById(bodyOfPost._id);
+    return updpatedPost;
   }
 
   // get a post
