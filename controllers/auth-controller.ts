@@ -1,7 +1,6 @@
 import { validationResult } from "express-validator";
 import ApiErrors from "../exceptions/api-error";
 import authService from "../module/auth/auth.service";
-import userService from "../service/user-service";
 
 class AuthController {
   async registration(req, res, next): Promise<void> {
@@ -18,7 +17,6 @@ class AuthController {
         maxAge: 30 * 24 * 60 * 60 * 1000,
         httpOnly: true,
       });
-      // return res.json(userData);
       res.json(userData);
     } catch (e) {
       next(e);

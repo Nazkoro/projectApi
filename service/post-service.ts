@@ -4,26 +4,8 @@ import ApiError from "../exceptions/api-error";
 import CommentModel from "../models/Comment";
 
 class PostService {
-  // !!!IMPORTANT!!! ADD FUNCTION FOR DONT REPEAT REQUEST TO THE MONGODB (use ZAMYKANIYe)
-  // async findData(func) {
-  // ...
-  //   return await func;
-  // ...
-  // }
-
   async getAllPosts() {
-    const comments = await CommentModel.find();
     const posts = await PostModel.find();
-    // eslint-disable-next-line array-callback-return
-    posts.forEach((currentPost) => {
-      // eslint-disable-next-line no-param-reassign
-      comments.forEach((currentComment) => {
-        // eslint-disable-next-line eqeqeq
-        if (currentPost._id == currentComment.postId) {
-          currentPost.coments.push(currentComment);
-        }
-      });
-    });
 
     // const posts = await PostModel.aggregate([
     //   {
@@ -35,11 +17,8 @@ class PostService {
     //     },
     //   },
     // ]);
-    console.log("===getAllPosts====", posts);
     return posts;
   }
-
-  // create a post
 
   async addPost(bodyOfPost) {
     console.log(bodyOfPost);
@@ -48,7 +27,6 @@ class PostService {
     console.log("222", savePost);
     return savePost;
   }
-  // update a post
 
   async updPost(id, bodyOfPost) {
     try {
@@ -62,8 +40,6 @@ class PostService {
     } catch {
       throw new ApiError(403, "check your data input");
     }
-
-    // res.status(403).json("you can update only your post");
   }
   // delete a post
 
@@ -102,22 +78,11 @@ class PostService {
     return updpatedPost;
   }
 
-  // get a post
   async printPost(id) {
     const myPost = await PostModel.find({ userId: id });
     return myPost;
   }
 
-  //   router.get("/posts", async (req, res) => {
-  //     try {
-  //       const posts = await PostModel.find()
-  //       res.status(200).json(posts);
-  //     } catch (err) {
-  //       res.status(500).json(err);
-  //     }
-  //   });
-
-  // get timeline posts
   async printPostTimeline(userId) {
     const currentUser = await User.findById(userId);
     const userPosts = await PostModel.find({ userId: currentUser._id });

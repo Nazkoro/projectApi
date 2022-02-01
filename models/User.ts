@@ -89,7 +89,14 @@ const UserSchema = new mongoos.Schema(
     },
     desc: {
       type: String,
-      max: 50,
+      default: "",
+    },
+    position: {
+      type: String,
+      default: "",
+    },
+    jobs: {
+      type: String,
       default: "",
     },
     relationship: {

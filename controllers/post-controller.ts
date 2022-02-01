@@ -1,4 +1,3 @@
-import cookieParser from "cookie-parser";
 import postService from "../service/post-service";
 
 class PostController {
@@ -10,8 +9,6 @@ class PostController {
     req.body.img = req.file.filename;
     req.body.userId = req.user.id;
     req.body.username = req.user.username;
-    console.log("111", req.body);
-
     return postService.addPost(req.body);
   }
 
@@ -24,8 +21,6 @@ class PostController {
   }
 
   likedPost(req, res) {
-    // req.body.currentUserId = req.user.id;
-    // return postService.likePost(req.body, req.user.id);
     return postService.likePost(req.body);
   }
 

@@ -10,11 +10,6 @@ const CommentSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    username: {
-      type: String,
-      require: true,
-      unique: true,
-    },
     text: {
       type: String,
       max: 500,
