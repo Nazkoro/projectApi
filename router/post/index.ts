@@ -5,7 +5,6 @@ import multerMiddleware from "../../middlewares/multter-middleware";
 
 // @ts-ignore
 const postRouter = new Router();
-
 postRouter.get("/", checkReq(postController.getPosts));
 postRouter.post(
   "/upload",
@@ -14,9 +13,9 @@ postRouter.post(
 );
 postRouter.put("/like", checkReq(postController.likedPost));
 postRouter.put("/:id", checkReq(postController.updatePost));
-postRouter.delete("/:id", checkReq(postController.deletePost));
+// postRouter.delete("/:id", checkReq(postController.deletePost));
+postRouter.delete("/delete/:id", checkReq(postController.deletePost));
 // router.put("/:id/like", authMiddleware, postController.likedPost);
-
 postRouter.get("/timeline/:userId", checkReq(postController.getTimelinePosts));
 postRouter.get("/profile/:username", checkReq(postController.getUserAllPosts));
 postRouter.get("/my-post", checkReq(postController.getCurrentuserPosts));

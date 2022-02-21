@@ -42,20 +42,18 @@ class PostService {
     }
   }
   // delete a post
-
-  async removePost(_id, bodyOfPost) {
-    const post = await PostModel.findById(_id);
-    if (post.userId === bodyOfPost.userId) {
-      await post.deleteOne();
-      return "the post has been deleted";
-    }
-    console.log("throw error");
-    throw new ApiError(403, "you can delete only your post");
-
-    // return res.status(403).json("you can delete only your post");
+  async removePost(id) {
+    const post = await PostModel.findByIdAndDelete(id);
+    // if (post.userId === bodyOfPost.userId) {
+    //  const postDeleted =  await post.deleteOne();
+    //
+    //   return "the post has been deleted";
+    // }
+    console.log("------post-------",post)
+    return post;
+    // throw new ApiError(403, "you can delete only your post");
   }
   // like / dislike a post
-
   // async likePost (id, bodyOfPost) {
   //
   //     const post = await PostModel.findById(id);

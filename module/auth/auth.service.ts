@@ -35,7 +35,8 @@ export class AuthService {
     const tokens = tokenService.generateTokens({ ...userDto });
     await tokenService.saveToken(userDto.id, tokens.refreshToken);
 
-    return { ...tokens, user: userDto };
+   // return { ...tokens, user: userDto };
+    return { ...tokens};
   }
 
   async activate(activationLink) {
@@ -61,7 +62,8 @@ export class AuthService {
     const tokens = tokenService.generateTokens({ ...userDto });
 
     await tokenService.saveToken(userDto.id, tokens.refreshToken);
-    return { ...tokens, user: userDto };
+    //return { ...tokens, user: userDto };
+    return { ...tokens}
   }
 
   async logout(refreshToken) {

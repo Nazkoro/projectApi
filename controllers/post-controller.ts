@@ -17,7 +17,8 @@ class PostController {
   }
 
   deletePost(req, res) {
-    return postService.removePost(req.params.id, req.body);
+    console.log(req.params.id)
+    return postService.removePost(req.params.id);
   }
 
   likedPost(req, res) {
