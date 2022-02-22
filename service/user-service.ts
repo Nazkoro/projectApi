@@ -9,8 +9,21 @@ class UserService {
   }
 
   async getOnlineAllUsers() {
+    // eslint-disable-next-line
+    let arrayUserID = [];
     const usersOnline = await TokenModel.find();
-    return usersOnline;
+
+    usersOnline.forEach((currentToken) => {
+      arrayUserID.push(currentToken.user);
+    });
+    const online = await Promise.all(
+      arrayUserID.map((friendId) => {
+        return UserModel.findById(friendId);
+      })
+    );
+    // const users = await UserModel.find({ _id: { $in: arrayUserID } });
+    // console.log("users", users);
+    return online;
   }
 
   // update user
@@ -19,7 +32,6 @@ class UserService {
       $set: bodyOfPost,
     });
     // user.save()
-    console.log("userInUserService", user);
     return user;
   }
 
@@ -54,9 +66,10 @@ class UserService {
     // eslint-disable-next-line array-callback-return
     friends.map((friend) => {
       // eslint-disable-next-line @typescript-eslint/naming-convention
-      const { _id, username, profilePicture } = friend;
-      friendList.push({ _id, username, profilePicture });
+      const { _id, username, coverPicture } = friend;
+      friendList.push({ _id, username, coverPicture });
     });
+    console.log("friendList", friendList);
     return friendList;
   }
 
@@ -72,8 +85,8 @@ class UserService {
     // eslint-disable-next-line array-callback-return
     friends.map((friend) => {
       // eslint-disable-next-line @typescript-eslint/naming-convention
-      const { _id, username, profilePicture } = friend;
-      friendList.push({ _id, username, profilePicture });
+      const { _id, username, coverPicture } = friend;
+      friendList.push({ _id, username, coverPicture });
     });
     console.log("=================Myfriends", friendList);
     return friendList;

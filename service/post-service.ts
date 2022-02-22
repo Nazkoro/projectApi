@@ -5,7 +5,9 @@ import CommentModel from "../models/Comment";
 
 class PostService {
   async getAllPosts() {
+    // ПЕРЕДАВАТЬ ОБЬЕКТ НА ФРОНТ В КОТОРМ К КАЖДОМУ ПОСТУ БУДЕТ ДОЮАВЛЕНА АВТАРКА АВТОРА ПОСТА
     const posts = await PostModel.find();
+    const user = await User.find();
 
     // const posts = await PostModel.aggregate([
     //   {
@@ -41,6 +43,7 @@ class PostService {
       throw new ApiError(403, "check your data input");
     }
   }
+
   // delete a post
   async removePost(id) {
     const post = await PostModel.findByIdAndDelete(id);
@@ -49,10 +52,11 @@ class PostService {
     //
     //   return "the post has been deleted";
     // }
-    console.log("------post-------",post)
+    console.log("------post-------", post);
     return post;
     // throw new ApiError(403, "you can delete only your post");
   }
+
   // like / dislike a post
   // async likePost (id, bodyOfPost) {
   //
