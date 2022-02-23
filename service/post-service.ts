@@ -7,15 +7,29 @@ class PostService {
   async getAllPosts() {
     // ПЕРЕДАВАТЬ ОБЬЕКТ НА ФРОНТ В КОТОРМ К КАЖДОМУ ПОСТУ БУДЕТ ДОЮАВЛЕНА АВТАРКА АВТОРА ПОСТА
     const posts = await PostModel.find();
-    const user = await User.find();
+    const users = await User.find();
+    posts.forEach((post) => {
+      users.forEach((user) => {
+        // eslint-disable-next-line
+        let newpost = { ...post };
+        // eslint-disable-next-line eqeqeq
+        if (post.userId == user._id) {
+          // eslint-disable-next-line no-param-reassign
+          console.log("user", user);
+          // eslint-disable-next-line no-param-reassign
+          newpost.picture = user.coverPicture;
+          console.log("post", newpost);
+        }
+      });
+    });
 
-    // const posts = await PostModel.aggregate([
+    // const aggregatePosts = await PostModel.aggregate([
     //   {
     //     $lookup: {
-    //       from: CommentModel.collection.name,
-    //       localField: "_id",
-    //       foreignField: "postId",
-    //       as: "commentsForPost",
+    //       from: User.collection.name,
+    //       localField: "userId",
+    //       foreignField: "_id",
+    //       as: "avtorPost",
     //     },
     //   },
     // ]);
@@ -23,10 +37,8 @@ class PostService {
   }
 
   async addPost(bodyOfPost) {
-    console.log(bodyOfPost);
     const newPost = new PostModel(bodyOfPost);
     const savePost = await newPost.save();
-    console.log("222", savePost);
     return savePost;
   }
 
@@ -52,7 +64,6 @@ class PostService {
     //
     //   return "the post has been deleted";
     // }
-    console.log("------post-------", post);
     return post;
     // throw new ApiError(403, "you can delete only your post");
   }
