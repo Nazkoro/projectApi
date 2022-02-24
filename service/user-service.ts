@@ -44,6 +44,8 @@ class UserService {
   // get a user
   async printUser(id) {
     const user = await UserModel.findById(id);
+    // console.log("user", user);
+    // console.log("user._id.toString()", user._id.toString());
     return user;
     // const username = usrname;
     //
