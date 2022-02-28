@@ -19,7 +19,7 @@ userRouter.put(
 );
 userRouter.delete("/:id", checkReq(userController.deleteUser));
 userRouter.get("/account", checkReq(userController.getUser));
-
+userRouter.get("/chatUser", checkReq(userController.getUserChat));
 userRouter.get("/friends", checkReq(userController.getMyFriends));
 userRouter.get("/friends/:userId", checkReq(userController.getFriends));
 // userRouter.put("/:id/follow", checkReq(userController.putFollowUser));

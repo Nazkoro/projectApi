@@ -21,6 +21,10 @@ class UserController {
     return userService.printUser(req.query.userId);
   }
 
+  getUserChat(req, res) {
+    return userService.printChatUser(req.query.userId, req.query.username);
+  }
+
   getFriends(req, res) {
     return userService.printFriends(req.params.userId);
   }

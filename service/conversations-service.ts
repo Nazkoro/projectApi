@@ -10,9 +10,11 @@ class ConversationService {
   }
 
   async printConversationOfUser(userId) {
+    console.log(userId);
     const conversation = await Conversation.find({
       members: { $in: [userId] },
     });
+    console.log("conversation", conversation);
     return conversation;
   }
 

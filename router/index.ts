@@ -14,7 +14,7 @@ router.use("/auth", authRouter);
 router.use("/posts", authMiddleware, postRouter);
 router.use("/comment", authMiddleware, commentRouter);
 router.use("/user", authMiddleware, userRouter);
-router.use("/message", authMiddleware, messageRouter);
-router.use("/conversation", authMiddleware, conversationRouter);
+router.use("/message", messageRouter);
+router.use("/conversation", conversationRouter);
 
 export default router;

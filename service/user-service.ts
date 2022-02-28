@@ -56,6 +56,15 @@ class UserService {
     // return other;
   }
 
+  // get a user
+  async printChatUser(userId, usrname) {
+    const user = userId
+      ? await UserModel.findById(userId)
+      : await UserModel.findOne({ username: usrname });
+    const { password, updatedAt, ...other } = user._doc;
+    return other;
+  }
+
   // get friends
   async printFriends(id) {
     const user = await UserModel.findById(id);
