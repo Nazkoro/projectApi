@@ -7,6 +7,11 @@ import { checkReq } from "../../middlewares/checkRequest";
 const userRouter = new Router();
 
 userRouter.get("/", checkReq(userController.getUsers));
+userRouter.get("/username/:username", checkReq(userController.getUserName));
+userRouter.get(
+  "/find/:firstUserId/:secondUserId",
+  checkReq(userController.getInfoUser)
+);
 userRouter.get("/online", checkReq(userController.getOnlineUsers));
 userRouter.put("/follow", checkReq(userController.putFollowUser));
 userRouter.put("/unfollow", checkReq(userController.putUnfollowUser));
