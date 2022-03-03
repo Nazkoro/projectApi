@@ -8,6 +8,20 @@ class UserService {
     return users;
   }
 
+  async getUserByUsername(name) {
+    const user = await UserModel.find({ username: name });
+    console.log("username", user);
+    return user;
+  }
+
+  async getUserInfoById(firstUserId, secondUserId) {
+    const user1 = await UserModel.findById(firstUserId);
+    const user2 = await UserModel.findById(secondUserId);
+
+    console.log("username", user1, user2);
+    return [user1, user2];
+  }
+
   async getOnlineAllUsers() {
     // eslint-disable-next-line
     let arrayUserID = [];

@@ -2,7 +2,6 @@ import messagesService from "../service/messages-service";
 
 class MessagesController {
   postMessage(req, res) {
-    console.log("postMessage", req);
     return messagesService.addMessage(req.body);
   }
 

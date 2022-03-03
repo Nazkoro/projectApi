@@ -2,17 +2,21 @@ import Message from "../models/Message";
 
 class ConversationService {
   async addMessage(body) {
-    console.log("body", body);
     const newMessage = new Message(body);
     const savedMessage = await newMessage.save();
-    console.log(savedMessage);
-    return savedMessage;
+    console.log("line 7 savedMessage", savedMessage);
+    const messages = await Message.findById(savedMessage._id).populate(
+      "sender"
+    );
+    console.log(" line 10 messages", messages);
+    return messages;
   }
 
   async printMessages(conversatinId) {
     const messages = await Message.find({
       conversationId: conversatinId,
-    });
+    }).populate("sender");
+
     return messages;
   }
 }

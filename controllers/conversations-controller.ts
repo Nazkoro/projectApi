@@ -2,6 +2,7 @@ import conversationsService from "../service/conversations-service";
 
 class ConversationController {
   addNewConversation(req, res) {
+    console.log(req.body);
     return conversationsService.createNewConversation(
       req.body.senderId,
       req.body.receiverId

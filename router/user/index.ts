@@ -7,10 +7,14 @@ import { checkReq } from "../../middlewares/checkRequest";
 const userRouter = new Router();
 
 userRouter.get("/", checkReq(userController.getUsers));
+userRouter.get("/username/:username", checkReq(userController.getUserName));
+userRouter.get(
+  "/find/:firstUserId/:secondUserId",
+  checkReq(userController.getInfoUser)
+);
 userRouter.get("/online", checkReq(userController.getOnlineUsers));
 userRouter.put("/follow", checkReq(userController.putFollowUser));
 userRouter.put("/unfollow", checkReq(userController.putUnfollowUser));
-// userRouter.put("/:id", checkReq(userController.updateUser));
 
 userRouter.put(
   "/add-info",
@@ -22,7 +26,5 @@ userRouter.get("/account", checkReq(userController.getUser));
 userRouter.get("/chatUser", checkReq(userController.getUserChat));
 userRouter.get("/friends", checkReq(userController.getMyFriends));
 userRouter.get("/friends/:userId", checkReq(userController.getFriends));
-// userRouter.put("/:id/follow", checkReq(userController.putFollowUser));
-// userRouter.put("/:id/unfollow", checkReq(userController.putUnfollowUser));
 
 export default userRouter;

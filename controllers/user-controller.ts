@@ -5,6 +5,18 @@ class UserController {
     return userService.getAllUsers();
   }
 
+  getUserName(req, res) {
+    console.log("req.params.username", req.params.username);
+    return userService.getUserByUsername(req.params.username);
+  }
+
+  getInfoUser(req, res) {
+    return userService.getUserInfoById(
+      req.params.firstUserId,
+      req.params.secondUserId
+    );
+  }
+
   getOnlineUsers(req, res) {
     return userService.getOnlineAllUsers();
   }
