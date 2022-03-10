@@ -113,7 +113,6 @@ class UserService {
       const { _id, username, coverPicture } = friend;
       friendList.push({ _id, username, coverPicture });
     });
-    console.log("=================Myfriends", friendList);
     return friendList;
   }
 
