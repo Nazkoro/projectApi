@@ -1,10 +1,12 @@
 import MultuConversation from "../models/MultiConversation";
 
 class MultiConversationService {
-  async createNewConversation(senderId, arrayReceiverId) {
+  async createNewConversation(userList) {
+    const listId = userList.map((item) => item._id);
     const newConversation = new MultuConversation({
-      members: [senderId, ...arrayReceiverId],
+      members: [...listId],
     });
+    console.log("========members==========", newConversation);
     const savedConversation = await newConversation.save();
     return savedConversation;
   }

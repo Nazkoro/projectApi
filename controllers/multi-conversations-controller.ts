@@ -2,11 +2,8 @@ import multiConversationsService from "../service/multi-conversations-service";
 
 class MultiConversationController {
   addNewConversation(req, res) {
-    console.log(req.body);
-    return multiConversationsService.createNewConversation(
-      req.body.senderId,
-      req.body.receiverId
-    );
+    // console.log("===============req.body============", req.body);
+    return multiConversationsService.createNewConversation(req.body);
   }
 
   getConversationOfUser(req, res) {
