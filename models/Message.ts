@@ -21,7 +21,7 @@ import { Schema, model } from "mongoose";
 const MessageSchema = new Schema(
   {
     sender: { type: Schema.Types.ObjectId, ref: "User" },
-    conversationId: { type: String },
+    conversationId: { type: Schema.Types.ObjectId },
     text: { type: String },
   },
   { timestamps: true }
