@@ -36,6 +36,11 @@ class ConversationService {
     return conversation;
   }
 
+  async removeConversation(id) {
+    const conversation = await Conversation.findByIdAndDelete(id);
+    return conversation;
+  }
+
   async printconversationIncludesOfTwoUserId(firstUserId, secondUserId) {
     const conversation = await Conversation.findOne({
       members: { $all: [firstUserId, secondUserId] },
