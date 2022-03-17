@@ -4,6 +4,7 @@ const MultiConversationSchema = new mongoose.Schema(
   {
     members: {
       type: Array,
+      ref: "User",
     },
   },
   { timestamps: true }

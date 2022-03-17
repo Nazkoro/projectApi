@@ -6,7 +6,6 @@ class MultiConversationService {
     const newConversation = new MultuConversation({
       members: [...listId],
     });
-    console.log("========members==========", newConversation);
     const savedConversation = await newConversation.save();
     return savedConversation;
   }
@@ -15,8 +14,7 @@ class MultiConversationService {
     console.log(userId);
     const conversation = await MultuConversation.find({
       members: { $in: [userId] },
-    });
-    console.log("conversation", conversation);
+    }).populate("members");
     return conversation;
   }
 

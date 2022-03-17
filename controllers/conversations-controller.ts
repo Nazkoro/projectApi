@@ -1,9 +1,7 @@
 import conversationsService from "../service/conversations-service";
-import postService from "../service/post-service";
 
 class ConversationController {
   addNewConversation(req, res) {
-    console.log(req.body);
     return conversationsService.createNewConversation(
       req.body.senderId,
       req.body.receiverId
@@ -22,7 +20,9 @@ class ConversationController {
   }
 
   deleteConversation(req, res) {
-    console.log(req.params.id);
+    console.log(req.params);
+    console.log("deleteConversation");
+    console.log("LOL KEK", req.params.id);
     return conversationsService.removeConversation(req.params.id);
   }
 }

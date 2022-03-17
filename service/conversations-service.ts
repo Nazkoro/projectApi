@@ -1,7 +1,5 @@
 import Conversation from "../models/Conversation";
 import Message from "../models/Message";
-import User from "../models/User";
-import PostModel from "../models/Post";
 
 class ConversationService {
   async createNewConversation(senderId, receiverId) {
@@ -25,10 +23,6 @@ class ConversationService {
         },
       },
     ]);
-    console.log(
-      "=========================conversation================",
-      conversation
-    );
     // const conversation = await Conversation.find({
     //   members: { $in: [userId] },
     // });
@@ -37,7 +31,13 @@ class ConversationService {
   }
 
   async removeConversation(id) {
+    console.log(111);
+    const deleteMessage = await Message.deleteMany({
+      conversationId: id,
+    });
+    console.log("delete message ", deleteMessage);
     const conversation = await Conversation.findByIdAndDelete(id);
+    // console.log("delete message ", deleteMessage);
     return conversation;
   }
 
