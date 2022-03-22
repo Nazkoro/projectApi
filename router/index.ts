@@ -7,6 +7,7 @@ import userRouter from "./user";
 import conversationRouter from "./conversation";
 import messageRouter from "./messages";
 import multiConversationRouter from "./multi-conversation";
+import adminRouter from "./admin";
 
 // @ts-ignore
 const router = new Router();
@@ -18,5 +19,6 @@ router.use("/user", authMiddleware, userRouter);
 router.use("/message", messageRouter);
 router.use("/conversation", conversationRouter);
 router.use("/multi-conversation", multiConversationRouter);
+router.use("/admin", adminRouter);
 
 export default router;
