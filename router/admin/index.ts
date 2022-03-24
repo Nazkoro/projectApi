@@ -8,6 +8,7 @@ const adminRouter = new Router();
 adminRouter.get("/", checkReq(adminController.getUsers));
 adminRouter.put("/update", checkReq(adminController.updateUser));
 adminRouter.post("/create", checkReq(adminController.createUser));
+adminRouter.post("/auth", checkReq(adminController.authUser));
 adminRouter.delete("/:id", checkReq(adminController.deleteUser));
 
 export default adminRouter;

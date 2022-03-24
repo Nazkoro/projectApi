@@ -2,7 +2,12 @@ import adminService from "../service/admin-service";
 
 class UserController {
   getUsers(req, res) {
-    return adminService.getAllUsers();
+    const pageOptions = {
+      page: parseInt(req.query.page, 10) || 0,
+      limit: parseInt(req.query.limit, 10) || 10,
+      PerPage: parseInt(req.query.PerPage, 10) || 10,
+    };
+    return adminService.getAllUsers(pageOptions);
   }
 
   deleteUser(req, res) {
@@ -18,6 +23,10 @@ class UserController {
 
   createUser(req, res) {
     return adminService.addUser(req.body);
+  }
+
+  authUser(req, res) {
+    return adminService.login(req.body);
   }
 }
 export default new UserController();

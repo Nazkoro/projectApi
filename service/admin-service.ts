@@ -3,24 +3,27 @@ import { v4 as uuidv4 } from "uuid";
 import UserModel from "../models/User";
 
 class AdminService {
-  async getAllUsers() {
-    const users = await UserModel.find();
-    return users;
+  async getAllUsers(pageOptions) {
+    const user = await UserModel.find()
+      .skip(pageOptions.page * pageOptions.PerPage)
+      .limit(pageOptions.limit);
+    console.log(user);
+    return user;
+  }
+
+  async login(body) {
+    console.log(body);
+    // eslint-disable-next-line eqeqeq
+    if (body.password == 1234) return true;
+    return false;
   }
 
   async addUser(getUser) {
-    console.log("get user from admin", getUser);
-    // const newUser = new UserModel(getUser);
-    // const saveuser = await newUser.save();
-    // return saveuser;
-
-    // const { email, username, password } = getUser;
-
     const { email, username, year, password, country, city, jobs, position } =
       getUser;
 
     const hashPassword = await bcrypt.hash(password, 3);
-    const activationLink = uuidv4(); // v34fa-asfasf-142saf-sa-asf
+    const activationLink = uuidv4();
 
     const user = await UserModel.create({
       email,
@@ -46,7 +49,6 @@ class AdminService {
       $set: bodyOfPost,
     });
     console.log("updated", user);
-    // user.save()
     return user;
   }
 
