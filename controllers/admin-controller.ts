@@ -10,6 +10,10 @@ class UserController {
     return adminService.getAllUsers(pageOptions);
   }
 
+  filteruser(req, res) {
+    return adminService.getFilterUsers(req.body);
+  }
+
   deleteUser(req, res) {
     if (req.body.userId === req.params.id || req.body.isAdmin) {
       return adminService.removeUser(req.params.id);

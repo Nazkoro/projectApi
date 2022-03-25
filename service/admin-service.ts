@@ -11,6 +11,18 @@ class AdminService {
     return user;
   }
 
+  async getFilterUsers(filter) {
+    console.log("filter", filter);
+    // const obj = {
+    //   username: filter.username,
+    //   city: filter.city,
+    //   jobs: filter.jobs,
+    //   country: filter.country,
+    // };
+    const user = await UserModel.find({ ...filter });
+    return user;
+  }
+
   async login(body) {
     console.log(body);
     // eslint-disable-next-line eqeqeq
