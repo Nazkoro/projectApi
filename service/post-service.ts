@@ -1,6 +1,4 @@
 import mongoose from "mongoose";
-import { log } from "util";
-import { getLogger } from "nodemailer/lib/shared";
 import PostModel from "../models/Post";
 import User from "../models/User";
 import ApiError from "../exceptions/api-error";
@@ -8,49 +6,28 @@ import CommentModel from "../models/Comment";
 
 class PostService {
   async getAllPosts() {
-    // ПЕРЕДАВАТЬ ОБЬЕКТ НА ФРОНТ В КОТОРМ К КАЖДОМУ ПОСТУ БУДЕТ ДОЮАВЛЕНА АВТАРКА АВТОРА ПОСТА
-    // const posts = await PostModel.find();
-    // const users = await User.find();
-    // posts.forEach((post) => {
-    //   users.forEach((user) => {
-    //     // eslint-disable-next-line
-    //     let newpost = { ...post };
-    //     // eslint-disable-next-line eqeqeq
-    //     if (post.userId == user._id) {
-    //       // eslint-disable-next-line no-param-reassign
-    //       console.log("user", user);
-    //       // eslint-disable-next-line no-param-reassign
-    //       newpost.picture = user.coverPicture;
-    //       console.log("post", newpost);
-    //     }
-    //   });
-    // });
-
-    const aggregatePosts = await PostModel.aggregate([
-      {
-        $lookup: {
-          from: User.collection.name,
-          localField: "username",
-          foreignField: "username",
-          as: "avtorPost",
-        },
-      },
-      { $sort: { createdAt: -1 } },
-    ]);
-
-    // console.log("=====aggregatePosts====", aggregatePosts);
-    return aggregatePosts;
-    // return posts;
+    const result = await PostModel.find()
+      .populate("userId")
+      .sort({ createdAt: -1 });
+    return result;
+    // const aggregatePosts = await PostModel.aggregate([
+    //   {
+    //     $lookup: {
+    //       from: User.collection.name,
+    //       localField: "username",
+    //       foreignField: "username",
+    //       as: "avtorPost",
+    //     },
+    //   },
+    //   { $sort: { createdAt: -1 } },
+    // ]);
+    // return aggregatePosts;
   }
 
   async addPost(bodyOfPost) {
     console.log("bodyOfPost", bodyOfPost);
     const newPost = new PostModel(bodyOfPost);
     const savePost = await newPost.save();
-    console.log("savePost", savePost);
-
-    // const updpatedPost = await PostModel.findById(bodyOfPost._id);
-    // const objectId = new mongoose.Types.ObjectId(bodyOfPost._id);
 
     const aggregatePosts = await PostModel.aggregate([
       { $match: { _id: savePost._id } },
@@ -65,8 +42,6 @@ class PostService {
     ]);
     console.log("aggregatePosts", aggregatePosts);
     return aggregatePosts;
-
-    // return savePost;
   }
 
   async updPost(id, bodyOfPost) {
@@ -86,27 +61,10 @@ class PostService {
   // delete a post
   async removePost(id) {
     const post = await PostModel.findByIdAndDelete(id);
-    // if (post.userId === bodyOfPost.userId) {
-    //  const postDeleted =  await post.deleteOne();
-    //
-    //   return "the post has been deleted";
-    // }
     return post;
     // throw new ApiError(403, "you can delete only your post");
   }
 
-  // like / dislike a post
-  // async likePost (id, bodyOfPost) {
-  //
-  //     const post = await PostModel.findById(id);
-  //     if (!post.likes.includes(bodyOfPost.userId)) {
-  //       await post.updateOne({ $push: { likes: bodyOfPost.userId } });
-  //       return res.status(200).json("The post has been liked");
-  //     } else {
-  //       await post.updateOne({ $pull: { likes: bodyOfPost.userId } });
-  //       return  res.status(200).json("The post has been disliked");
-  //     }
-  // };
   async likePost(bodyOfPost) {
     // eslint-disable-next-line no-param-reassign
     bodyOfPost.likes.count = bodyOfPost.likes.isLiked

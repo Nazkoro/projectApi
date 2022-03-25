@@ -5,7 +5,8 @@ import User from "../models/User";
 
 class CommentService {
   async getAllCommentS() {
-    const comments = await CommentModel.find();
+    const comments = await CommentModel.find().populate("userId");
+    console.log("comments", comments);
     return comments;
   }
 
@@ -17,14 +18,33 @@ class CommentService {
 
   async addTextComment(bodyOfComment) {
     const newComment = new CommentModel(bodyOfComment.comment);
+    // СОХРАНЯТЬ ЮЗЕРА ПО USERID в комент
     const saveComment = await newComment.save();
     bodyOfComment.post.coments.push(saveComment);
     await PostModel.findByIdAndUpdate(
       bodyOfComment.post._id,
       bodyOfComment.post
     );
-    const updpatedPost = await PostModel.findById(bodyOfComment.post._id);
+
+    const updpatedPost = await PostModel.findById(
+      bodyOfComment.post._id
+    ).populate("userId");
     return updpatedPost;
+
+    //      ВНИМАНИЕ!!! СМОТРЕТЬ 41 СТРОКУ
+
+    // const topPost = await Promise.all(
+    //   updpatedPost.coments.map((post) => {
+    //     return CommentModel.findById(post._id).populate("userId");
+    //   })
+    // );
+    // ПОЧЕМУ НЕ ОТРАБАТЫВАЕТ СТРОКА { $match: { _id: bodyOfComment.post._id } }???
+    // const result = await PostModel.aggregate([
+    //   { $match: { _id: bodyOfComment.post._id } },
+    //   { $set: { coments: topPost } },
+    // ]);
+    // console.log("result", result);
+    // return result;
   }
 
   async updComment(id, bodyOfComment) {
@@ -64,7 +84,7 @@ class CommentService {
   }
 
   async printComment(id) {
-    const post = await CommentModel.findById(id);
+    const post = await CommentModel.findById(id).populate("userId");
     return post;
   }
 
@@ -81,12 +101,14 @@ class CommentService {
 
   async printCommentAll(username) {
     const user = await User.findOne({ username });
-    const posts = await CommentModel.find({ userId: user._id });
+    const posts = await CommentModel.find({ userId: user._id }).populate(
+      "userId"
+    );
     return posts;
   }
 
   async printCommentForThisPost(id) {
-    const comment = await CommentModel.find({ postId: id });
+    const comment = await CommentModel.find({ postId: id }).populate("userId");
     return comment;
   }
 }
