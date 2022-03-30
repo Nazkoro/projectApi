@@ -10,6 +10,10 @@ class UserController {
     return adminService.getAllUsers(pageOptions);
   }
 
+  getAlluser(req, res) {
+    return adminService.getAllUsersWithoutFilter();
+  }
+
   filteruser(req, res) {
     return adminService.getFilterUsers(req.body);
   }

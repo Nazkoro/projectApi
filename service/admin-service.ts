@@ -3,28 +3,24 @@ import { v4 as uuidv4 } from "uuid";
 import UserModel from "../models/User";
 
 class AdminService {
+  async getAllUsersWithoutFilter() {
+    const user = await UserModel.find();
+    return user;
+  }
+
   async getAllUsers(pageOptions) {
     const user = await UserModel.find()
       .skip(pageOptions.page * pageOptions.PerPage)
       .limit(pageOptions.limit);
-    console.log(user);
     return user;
   }
 
   async getFilterUsers(filter) {
-    console.log("filter", filter);
-    // const obj = {
-    //   username: filter.username,
-    //   city: filter.city,
-    //   jobs: filter.jobs,
-    //   country: filter.country,
-    // };
     const user = await UserModel.find({ ...filter });
     return user;
   }
 
   async login(body) {
-    console.log(body);
     // eslint-disable-next-line eqeqeq
     if (body.password == 1234) return true;
     return false;
