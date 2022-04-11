@@ -1,6 +1,7 @@
 import bcrypt from "bcrypt";
 import { v4 as uuidv4 } from "uuid";
 import UserModel from "../models/User";
+import PostModel from "../models/Post";
 
 class AdminService {
   async getAllUsersWithoutFilter() {
@@ -62,8 +63,8 @@ class AdminService {
 
   // delete user
   async removeUser(id) {
-    await UserModel.findByIdAndDelete(id);
-    return "Account has been deleted";
+    const user = await UserModel.findByIdAndDelete(id);
+    return user;
   }
 }
 export default new AdminService();
