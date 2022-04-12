@@ -9,6 +9,10 @@ const userRouter = new Router();
 userRouter.get("/", checkReq(userController.getUsers));
 userRouter.get("/username/:username", checkReq(userController.getUserName));
 userRouter.get(
+  "/relocated/:username",
+  checkReq(userController.getUserByUsername)
+);
+userRouter.get(
   "/find/:firstUserId/:secondUserId",
   checkReq(userController.getInfoUser)
 );

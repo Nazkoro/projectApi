@@ -14,6 +14,11 @@ class UserService {
     return user;
   }
 
+  async UserByUsername(username) {
+    const user = await UserModel.find({ username });
+    return user;
+  }
+
   async getUserInfoById(firstUserId, secondUserId) {
     const user1 = await UserModel.findById(firstUserId);
     const user2 = await UserModel.findById(secondUserId);

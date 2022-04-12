@@ -17,6 +17,7 @@ class CommentService {
   }
 
   async addTextComment(bodyOfComment) {
+    console.log("bodyOfComment", bodyOfComment);
     const newComment = new CommentModel(bodyOfComment.comment);
     // СОХРАНЯТЬ ЮЗЕРА ПО USERID в комент
     const saveComment = await newComment.save();

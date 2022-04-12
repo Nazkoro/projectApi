@@ -47,10 +47,8 @@ class PostService {
   async updPost(id, bodyOfPost) {
     try {
       const post = await PostModel.findById(id);
-
       if (post.userId === bodyOfPost.userId) {
         await post.updateOne({ $set: bodyOfPost });
-
         return "the post has been updated";
       }
     } catch {
@@ -65,14 +63,22 @@ class PostService {
     // throw new ApiError(403, "you can delete only your post");
   }
 
-  async likePost(bodyOfPost) {
+  async likePost(bodyOfPost, id) {
+    console.log(1, bodyOfPost);
     // eslint-disable-next-line no-param-reassign
-    bodyOfPost.likes.count = bodyOfPost.likes.isLiked
-      ? bodyOfPost.likes.count + 1
-      : bodyOfPost.likes.count - 1;
-    const post = await PostModel.findByIdAndUpdate(bodyOfPost._id, bodyOfPost);
-
+    // bodyOfPost.likes.count = bodyOfPost.likes.isLiked
+    //   ? bodyOfPost.likes.count + 1
+    //   : bodyOfPost.likes.count - 1;
     const updpatedPost = await PostModel.findById(bodyOfPost._id);
+    if (!updpatedPost.likes.includes(id)) {
+      await updpatedPost.updateOne({ $push: { likes: id } });
+    } else {
+      await updpatedPost.updateOne({ $pull: { likes: id } });
+    }
+
+    // const post = await PostModel.findByIdAndUpdate(bodyOfPost._id, bodyOfPost);
+
+    // const updpatedPost = await PostModel.findById(bodyOfPost._id);
     const objectId = new mongoose.Types.ObjectId(bodyOfPost._id);
 
     const aggregatePosts = await PostModel.aggregate([
@@ -86,6 +92,7 @@ class PostService {
         },
       },
     ]);
+    // console.log(2, aggregatePosts[0].likes);
     return aggregatePosts;
     // return updpatedPost;
   }

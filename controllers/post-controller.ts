@@ -17,12 +17,12 @@ class PostController {
   }
 
   deletePost(req, res) {
-    console.log(req.params.id)
+    console.log(req.params.id);
     return postService.removePost(req.params.id);
   }
 
   likedPost(req, res) {
-    return postService.likePost(req.body);
+    return postService.likePost(req.body, req.user.id);
   }
 
   getCurrentuserPosts(req, res) {

@@ -10,6 +10,11 @@ class UserController {
     return userService.getUserByUsername(req.params.username);
   }
 
+  getUserByUsername(req, res) {
+    console.log("req.params.username", req.params.username);
+    return userService.UserByUsername(req.params.username);
+  }
+
   getInfoUser(req, res) {
     return userService.getUserInfoById(
       req.params.firstUserId,

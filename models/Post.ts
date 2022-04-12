@@ -19,15 +19,19 @@ const PostSchema = new mongoose.Schema(
     img: {
       type: String,
     },
+    // likes: {
+    //   isLiked: {
+    //     type: Boolean,
+    //     default: false,
+    //   },
+    //   count: {
+    //     type: Number,
+    //     default: 0,
+    //   },
+    // },
     likes: {
-      isLiked: {
-        type: Boolean,
-        default: false,
-      },
-      count: {
-        type: Number,
-        default: 0,
-      },
+      type: Array,
+      default: [],
     },
     coments: {
       type: Array,
