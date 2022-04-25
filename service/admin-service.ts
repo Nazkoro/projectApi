@@ -9,6 +9,13 @@ class AdminService {
     return user;
   }
 
+  async getAllPosts() {
+    const result = await PostModel.find()
+      .populate("userId")
+      .sort({ createdAt: -1 });
+    return result;
+  }
+
   async getAllUsers(pageOptions) {
     const user = await UserModel.find()
       .skip(pageOptions.page * pageOptions.PerPage)
