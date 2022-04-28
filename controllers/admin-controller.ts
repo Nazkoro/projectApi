@@ -14,6 +14,10 @@ class UserController {
     return adminService.getAllPosts();
   }
 
+  getChartDashboardInfo(req, res) {
+    return adminService.getChartDashboard();
+  }
+
   getAlluser(req, res) {
     return adminService.getAllUsersWithoutFilter();
   }

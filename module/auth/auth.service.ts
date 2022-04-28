@@ -17,6 +17,7 @@ export class AuthService {
         `Пользователь с почтовым адресом ${email} уже существует`
       );
     }
+
     const hashPassword = await bcrypt.hash(password, 3);
     const activationLink = uuidv4(); // v34fa-asfasf-142saf-sa-asf
 
@@ -26,17 +27,17 @@ export class AuthService {
       password: hashPassword,
       activationLink,
     });
-    await mailService.sendActivationMail(
-      email,
-      `${process.env.API_URL}/api/activate/${activationLink}`
-    );
+    // await mailService.sendActivationMail(
+    //   email,
+    //   `${process.env.API_URL}/api/activate/${activationLink}`
+    // );
 
     const userDto = new UserDto(user); // id, email, isActivated
     const tokens = tokenService.generateTokens({ ...userDto });
     await tokenService.saveToken(userDto.id, tokens.refreshToken);
 
-   // return { ...tokens, user: userDto };
-    return { ...tokens};
+    // return { ...tokens, user: userDto };
+    return { ...tokens };
   }
 
   async activate(activationLink) {
@@ -62,8 +63,8 @@ export class AuthService {
     const tokens = tokenService.generateTokens({ ...userDto });
 
     await tokenService.saveToken(userDto.id, tokens.refreshToken);
-    //return { ...tokens, user: userDto };
-    return { ...tokens}
+    // return { ...tokens, user: userDto };
+    return { ...tokens };
   }
 
   async logout(refreshToken) {

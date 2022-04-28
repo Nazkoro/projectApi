@@ -5,7 +5,11 @@ import { checkReq } from "../../middlewares/checkRequest";
 // @ts-ignore
 const adminRouter = new Router();
 
-adminRouter.get("/all", checkReq(adminController.getAlluser));
+adminRouter.get(
+  "/chart-dashboard",
+  checkReq(adminController.getChartDashboardInfo)
+);
+adminRouter.get("/user-all", checkReq(adminController.getAlluser));
 adminRouter.get("/posts", checkReq(adminController.getPosts));
 adminRouter.get("/", checkReq(adminController.getUsers));
 adminRouter.put("/update", checkReq(adminController.updateUser));

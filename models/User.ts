@@ -7,13 +7,13 @@ const UserSchema = new mongoos.Schema(
       require: true,
       min: 3,
       max: 20,
-      unique: true,
+      unique: false,
     },
     email: {
       type: String,
       required: true,
       max: 50,
-      unique: true,
+      unique: false,
     },
     password: {
       type: String,

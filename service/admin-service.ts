@@ -4,6 +4,40 @@ import UserModel from "../models/User";
 import PostModel from "../models/Post";
 
 class AdminService {
+  async getChartDashboard() {
+    // const posts = await PostModel.find();
+    // НЕ РАБОТАЕТ MERGE?!
+    const posts = await PostModel.aggregate([
+      {
+        $group: {
+          _id: "$username",
+          countUserPosts: { $count: {} },
+          summaUserLikesOnThePosts: { $sum: "likes".length },
+          // likes: "likes.length",
+        },
+      },
+      // {
+      //   $lookup: {
+      //     from: UserModel.collection.name,
+      //     localField: "_id",
+      //     foreignField: "username",
+      //     as: "User",
+      //   },
+      // },
+      // {
+      //   $merge: {
+      //     into: UserModel.collection.name,
+      //     on: "_id",
+      //     whenMatched: "replace",
+      //     whenNotMatched: "insert",
+      //   },
+      // },
+    ]);
+    // const temp = await UserModel.populate(posts, { path: "userId" });
+    console.log("posts", posts);
+    return posts;
+  }
+
   async getAllUsersWithoutFilter() {
     const user = await UserModel.find();
     return user;
