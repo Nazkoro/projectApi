@@ -7,23 +7,23 @@ class AdminService {
   async getChartDashboard() {
     // const posts = await PostModel.find();
     // НЕ РАБОТАЕТ MERGE?!
-    const posts = await PostModel.aggregate([
-      {
-        $group: {
-          _id: "$username",
-          countUserPosts: { $count: {} },
-          summaUserLikesOnThePosts: { $sum: "likes".length },
-          // likes: "likes.length",
-        },
-      },
+    const users = await UserModel.aggregate([
       // {
-      //   $lookup: {
-      //     from: UserModel.collection.name,
-      //     localField: "_id",
-      //     foreignField: "username",
-      //     as: "User",
+      //   $group: {
+      //     _id: "$username",
+      //     countUserPosts: { $count: {} },
+      //     summaUserLikesOnThePosts: { $sum: "likes".length },
+      //     // likes: "likes.length",
       //   },
       // },
+      {
+        $lookup: {
+          from: PostModel.collection.name,
+          localField: "username",
+          foreignField: "username",
+          as: "PostOnUser",
+        },
+      },
       // {
       //   $merge: {
       //     into: UserModel.collection.name,
@@ -34,8 +34,8 @@ class AdminService {
       // },
     ]);
     // const temp = await UserModel.populate(posts, { path: "userId" });
-    console.log("posts", posts);
-    return posts;
+    console.log("posts", users);
+    return users;
   }
 
   async getAllUsersWithoutFilter() {
