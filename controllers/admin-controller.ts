@@ -29,7 +29,7 @@ class UserController {
   deleteUser(req, res) {
     console.log("ADMIN deleteUser ", req.params.id);
     return adminService.removeUser(req.params.id);
-    // return res.status(403).json("You can delete only your account!");
+
   }
 
   updateUser(req, res, next) {

@@ -86,7 +86,6 @@ class AuthController {
 
   async updatePassword(req, res) {
     const user = await authService.updPassword(req.body, req.user.id);
-    console.log(user);
     return user;
   }
 }

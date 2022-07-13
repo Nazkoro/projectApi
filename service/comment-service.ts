@@ -6,7 +6,6 @@ import User from "../models/User";
 class CommentService {
   async getAllCommentS() {
     const comments = await CommentModel.find().populate("userId");
-    console.log("comments", comments);
     return comments;
   }
 
@@ -17,9 +16,7 @@ class CommentService {
   }
 
   async addTextComment(bodyOfComment) {
-    console.log("bodyOfComment", bodyOfComment);
     const newComment = new CommentModel(bodyOfComment.comment);
-    // СОХРАНЯТЬ ЮЗЕРА ПО USERID в комент
     const saveComment = await newComment.save();
     bodyOfComment.post.coments.push(saveComment);
     await PostModel.findByIdAndUpdate(
@@ -31,21 +28,6 @@ class CommentService {
       bodyOfComment.post._id
     ).populate("userId");
     return updpatedPost;
-
-    //      ВНИМАНИЕ!!! СМОТРЕТЬ 41 СТРОКУ
-
-    // const topPost = await Promise.all(
-    //   updpatedPost.coments.map((post) => {
-    //     return CommentModel.findById(post._id).populate("userId");
-    //   })
-    // );
-    // ПОЧЕМУ НЕ ОТРАБАТЫВАЕТ СТРОКА { $match: { _id: bodyOfComment.post._id } }???
-    // const result = await PostModel.aggregate([
-    //   { $match: { _id: bodyOfComment.post._id } },
-    //   { $set: { coments: topPost } },
-    // ]);
-    // console.log("result", result);
-    // return result;
   }
 
   async updComment(id, bodyOfComment) {
@@ -61,7 +43,6 @@ class CommentService {
       throw new ApiError(403, "check your data input");
     }
 
-    // res.status(403).json("you can update only your post");
   }
 
   async removeComment(_id, bodyOfComment) {
@@ -70,7 +51,6 @@ class CommentService {
       await post.deleteOne();
       return "the post has been deleted";
     }
-    console.log("throw error");
     throw new ApiError(403, "you can delete only your post");
   }
 

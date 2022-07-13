@@ -20,9 +20,6 @@ class ConversationController {
   }
 
   deleteConversation(req, res) {
-    console.log(req.params);
-    console.log("deleteConversation");
-    console.log("LOL KEK", req.params.id);
     return conversationsService.removeConversation(req.params.id);
   }
 }

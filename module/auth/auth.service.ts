@@ -91,35 +91,18 @@ export class AuthService {
   }
 
   async checkEmail({ email }): Promise<void> {
-    console.log("auth-service", email);
-    // const { email, username, password } = body;
+
     const user = await UserModel.findOne({ email });
     if (!user) {
       throw ApiError.BadRequest("Пользователь с таким email не найден");
     }
-    // const user = await UserModel.create({
-    //   email,
-    //   username,
-    //   password: hashPassword,
-    //   activationLink,
-    // });
-
-    const userDto = new UserDto(user); // id, email, isActivated
+    const userDto = new UserDto(user);
     const tokens = tokenService.generateTokens({ ...userDto });
-    // надо ли менять и сылку на refresh token?
-    // await tokenService.saveToken(userDto.id, tokens.refreshToken);
-
-    // return { ...tokens, user: userDto };
-    // генеришь accessToken
-    // подставляешь вместо user/_id
 
     await mailService.sendRecoveryPassword(
       email,
       `${process.env.CLIENT_URL}/recovery-password/?token=${tokens.accessToken}`
-      // `${process.env.CLIENT_URL}/recovery-password/?token=${user._id}`
     );
-
-    // return user;
   }
 
   async updPassword(bodyOfPost, id) {

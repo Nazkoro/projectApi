@@ -7,6 +7,7 @@ import { checkReq } from "../../middlewares/checkRequest";
 const userRouter = new Router();
 
 userRouter.get("/", checkReq(userController.getUsers));
+userRouter.get("/recommindations", checkReq(userController.getRecommindations));
 userRouter.get("/username/:username", checkReq(userController.getUserName));
 userRouter.get(
   "/relocated/:username",

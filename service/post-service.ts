@@ -2,7 +2,6 @@ import mongoose from "mongoose";
 import PostModel from "../models/Post";
 import User from "../models/User";
 import ApiError from "../exceptions/api-error";
-import CommentModel from "../models/Comment";
 
 class PostService {
   async getAllPosts() {
@@ -10,18 +9,6 @@ class PostService {
       .populate("userId")
       .sort({ createdAt: -1 });
     return result;
-    // const aggregatePosts = await PostModel.aggregate([
-    //   {
-    //     $lookup: {
-    //       from: User.collection.name,
-    //       localField: "username",
-    //       foreignField: "username",
-    //       as: "avtorPost",
-    //     },
-    //   },
-    //   { $sort: { createdAt: -1 } },
-    // ]);
-    // return aggregatePosts;
   }
 
   async addPost(bodyOfPost) {
@@ -56,19 +43,12 @@ class PostService {
     }
   }
 
-  // delete a post
   async removePost(id) {
     const post = await PostModel.findByIdAndDelete(id);
     return post;
-    // throw new ApiError(403, "you can delete only your post");
   }
 
   async likePost(bodyOfPost, id) {
-    console.log(1, bodyOfPost);
-    // eslint-disable-next-line no-param-reassign
-    // bodyOfPost.likes.count = bodyOfPost.likes.isLiked
-    //   ? bodyOfPost.likes.count + 1
-    //   : bodyOfPost.likes.count - 1;
     const updpatedPost = await PostModel.findById(bodyOfPost._id);
     if (!updpatedPost.likes.includes(id)) {
       await updpatedPost.updateOne({ $push: { likes: id } });
@@ -76,9 +56,6 @@ class PostService {
       await updpatedPost.updateOne({ $pull: { likes: id } });
     }
 
-    // const post = await PostModel.findByIdAndUpdate(bodyOfPost._id, bodyOfPost);
-
-    // const updpatedPost = await PostModel.findById(bodyOfPost._id);
     const objectId = new mongoose.Types.ObjectId(bodyOfPost._id);
 
     const aggregatePosts = await PostModel.aggregate([
@@ -92,9 +69,7 @@ class PostService {
         },
       },
     ]);
-    // console.log(2, aggregatePosts[0].likes);
     return aggregatePosts;
-    // return updpatedPost;
   }
 
   async printPost(id) {
@@ -113,7 +88,6 @@ class PostService {
     return userPosts.concat(...friendPosts);
   }
 
-  // get user's all posts
   async printPostAll(username) {
     const user = await User.findOne({ username });
     const posts = await PostModel.find({ userId: user._id });

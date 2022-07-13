@@ -1,21 +1,4 @@
-// import mongoose, { Schema } from "mongoose";
-//
-// const MessageSchema = new mongoose.Schema(
-//   {
-//     conversationId: {
-//       type: String,
-//     },
-//
-//     sender: {
-//       type: String,
-//     },
-//     text: {
-//       type: String,
-//     },
-//   },
-//   { timestamps: true }
-// );
-// export default mongoose.model("Message", MessageSchema);
+
 import { Schema, model } from "mongoose";
 
 const MessageSchema = new Schema(

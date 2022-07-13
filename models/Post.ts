@@ -5,8 +5,6 @@ const PostSchema = new mongoose.Schema(
     userId: {
       type: Schema.Types.ObjectId,
       ref: "User",
-      // type: String,
-      // required: true,
     },
     username: {
       type: String,
@@ -19,16 +17,6 @@ const PostSchema = new mongoose.Schema(
     img: {
       type: String,
     },
-    // likes: {
-    //   isLiked: {
-    //     type: Boolean,
-    //     default: false,
-    //   },
-    //   count: {
-    //     type: Number,
-    //     default: 0,
-    //   },
-    // },
     likes: {
       type: Array,
       default: [],

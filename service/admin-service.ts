@@ -5,17 +5,9 @@ import PostModel from "../models/Post";
 
 class AdminService {
   async getChartDashboard() {
-    // const posts = await PostModel.find();
-    // НЕ РАБОТАЕТ MERGE?!
+
     const users = await UserModel.aggregate([
-      // {
-      //   $group: {
-      //     _id: "$username",
-      //     countUserPosts: { $count: {} },
-      //     summaUserLikesOnThePosts: { $sum: "likes".length },
-      //     // likes: "likes.length",
-      //   },
-      // },
+
       {
         $lookup: {
           from: PostModel.collection.name,
@@ -24,16 +16,8 @@ class AdminService {
           as: "PostOnUser",
         },
       },
-      // {
-      //   $merge: {
-      //     into: UserModel.collection.name,
-      //     on: "_id",
-      //     whenMatched: "replace",
-      //     whenNotMatched: "insert",
-      //   },
-      // },
+
     ]);
-    // const temp = await UserModel.populate(posts, { path: "userId" });
     console.log("posts", users);
     return users;
   }
@@ -86,19 +70,15 @@ class AdminService {
       jobs,
       position,
     });
-    console.log("saver user from admin ", user);
     return user;
   }
 
   // update user
   async updUser(bodyOfPost) {
-    console.log("update from admin", bodyOfPost);
-    // eslint-disable-next-line no-param-reassign
     bodyOfPost.password = await bcrypt.hash(bodyOfPost.password, 3);
     const user = await UserModel.findByIdAndUpdate(bodyOfPost._id, {
       $set: bodyOfPost,
     });
-    console.log("updated", user);
     return user;
   }
 

@@ -32,18 +32,24 @@ class MailService {
   }
 
   async sendRecoveryPassword(to, link) {
-    await this.transporter.sendMail({
-      from: process.env.SMTP_USER,
-      to,
-      subject: `Востоновление аккаунта на ${process.env.CLIENT_URL}`,
-      text: "",
-      html: `
+    console.log(process.env.SMTP_PORT);
+    try {
+      await this.transporter.sendMail({
+        from: process.env.SMTP_USER,
+        to,
+        subject: `Востоновление аккаунта на ${process.env.CLIENT_URL}`,
+        text: "",
+        html: `
                     <div>
                         <h1>Для востоновления пароля перейдите по ссылке</h1>
                         <a href="${link}">${link}</a>
                     </div>
                 `,
-    });
+      });
+    } catch (e){
+      console.log(e)
+    }
+
   }
 }
 

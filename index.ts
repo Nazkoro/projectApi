@@ -24,16 +24,12 @@ app.use(
     origin: process.env.CLIENT_URL,
   })
 );
-
 app.use("/api", rout);
-
 app.use(errorMiddleware);
 
 const start = async () => {
   try {
     await mongoose.connect(process.env.DB_URL, {
-      // useNewUrlParser: true,
-      // useUnifiedTopology: true,
     } as ConnectOptions);
     app.listen(PORT, () => {
       console.log(`Server started on PORT = ${PORT}, db:${process.env.DB_URL}`);

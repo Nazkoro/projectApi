@@ -4,14 +4,16 @@ class UserController {
   getUsers(req, res) {
     return userService.getAllUsers();
   }
+  getRecommindations(req, res) {
+    return userService.printRecommindations(req.user.id);
+  }
 
   getUserName(req, res) {
-    console.log("req.params.username", req.params.username);
     return userService.getUserByUsername(req.params.username);
   }
 
   getUserByUsername(req, res) {
-    console.log("req.params.username", req.params.username);
+
     return userService.UserByUsername(req.params.username);
   }
 
